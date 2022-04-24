@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head
+	th:replace="layout/baseLayout :: base-head(${otherUser.userDetail.userDisplayName}+'さんのフォロー', ~{::link}, ~{::script})">
+</head>
+<body>
+	<!--/*  ナビバー引継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: navbar"></div>
+	<!--/* サイドメニュー引継ぎ部分 */-->
+	<div th:replace="layout/myPageLayout :: sidebar"></div>
+	<div class="container">
+		<div class="row">
+			<div class="heading-icon">
+				<h5>
+					<img class="mb-2" th:src="@{/image/genjiko_icon/s_10_01.png}">
+					<th:block th:text="${otherUser.userDetail.userDisplayName}" />
+					さんのフォロー中
+				</h5>
+			</div>
+			<div class="yourpage follow" id="follow-scroll">
+				<th:block th:each="obj:${otherFollowing}">
+					<div class="followlist-wrap">
+						<th:block th:if="${obj==user}">
+							<!--/* aタグをth:blockの外で閉じているのでエラーが出ています */-->
+							<a th:href="@{/user/mypage/profile}">
+						</th:block>
+						<th:block th:unless="${obj==user}">
+							<!--/* aタグをth:blockの外で閉じているのでエラーが出ています */-->
+							<a
+								th:href="@{/user/yourpage/other_profile?userId={userId}(userId=${obj.userId})}">
+						</th:block>
+						<div class="follow-list alert" role="alert">
+							<div>
+								<th:block th:switch="${obj.userDetail.imgPath}">
+									<img th:case="null" th:src="@{/image/noimg.png}"
+										class="profile icon">
+									<img th:case="''" th:src="@{/image/noimg.png}"
+										class="profile icon">
+									<img th:case="*"
+										th:src="@{/image/upload/{imgPath}(imgPath=${obj.userDetail.imgPath})}"
+										class="profile icon">
+								</th:block>
+							</div>
+							<div class="follow user">
+								<div>
+									<div>
+										<th:block th:text="'@'+${obj.username}" />
+									</div>
+									<div>
+										<th:block th:switch="${obj.userDetail.userDisplayName}">
+											<th:block th:case="null" th:text="'　'" />
+											<th:block th:case="''" th:text="'　'" />
+											<th:block th:case="*"
+												th:text="${obj.userDetail.userDisplayName}" />
+										</th:block>
+									</div>
+									<div>
+										<th:block th:switch="${obj.userDetail.userShortDescription}">
+											<th:block th:case="null" th:text="'　'" />
+											<th:block th:case="''" th:text="'　'" />
+											<th:block th:case="*"
+												th:text="${obj.userDetail.userShortDescription}" />
+										</th:block>
+									</div>
+								</div>
+								<div class="follow-button">
+									<form th:action="@{/user/yourpage/follow}"
+										th:object="${followFollowerForm}" method="post">
+										<input type="hidden" th:value="${otherUser.userId}"
+											name="otherUserId"> <input type="hidden"
+											th:value="${obj.userId}" name="userId">
+										<th:block th:unless="${obj==user}">
+										<!--▲▲ ${#arrays.contains(〇〇,××) ▲▲-->
+											<th:block th:if="${#arrays.contains(following,obj)}">
+												<button type="submit" name="unfollow"
+													class="btn4 mr-1 mt-1 d-trans">フォローを外す</button>
+											</th:block>
+											<th:block th:unless="${#arrays.contains(following,obj)}">
+												<button type="submit" name="follow"
+													class="btn1 mr-1 mt-1 d-trans">フォローする</button>
+											</th:block>
+										</th:block>
+									</form>
+								</div>
+							</div>
+						</div>
+						</a>
+					</div>
+				</th:block>
+				<div class="follow-pagenation">
+					<a th:unless="${last}"
+						th:href="@{/user/yourpage/follow?userId={userId}&page={page}
+							(userId=${otherUser.userId},page = ${next})}">次へ</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--/* サイドメニュークローズ引継ぎ部分 */-->
+	<div th:replace="layout/myPageLayout :: sidebar-close"></div>
+	<!--/* footer引継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<!--/* js引継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+	<script>
+		var infScroll = new InfiniteScroll('#follow-scroll', { // 記事を挿入していく要素を指定
+			append : '.followlist-wrap', // 各記事の要素
+			path : '.follow-pagenation a', // 次のページへのリンク要素を指定
+			hideNav : '.follow-pagenation', // 指定要素を非表示にする（ここは無くてもOK）
+			button : '.view-more', // 記事を読み込むトリガーとなる要素を指定
+			scrollThreshold : 80, // スクロールで読み込む：falseで機能停止（デフォルトはtrue）
+			history : 'false', // falseで履歴に残さない
+			bufferPx : 30 // 次コンテンツロードタイミング指定
+		});
+	</script>
+</body>
+
+</html>

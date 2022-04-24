@@ -1,0 +1,87 @@
+#--------------------------------------------------------------------
+#☆コンテキストパス
+server.servlet.context-path=/syseng
+#--------------------------------------------------------------------
+#☆SQL設定
+spring.datasource.url=jdbc:mysql://160.16.115.5:3306/learning
+spring.datasource.username=practice
+spring.datasource.password=2020Mysql@10
+spring.datasource.driverClassName=com.mysql.cj.jdbc.Driver
+
+spring.jpa.database=MYSQL
+
+spring.jpa.show-sql=true
+
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+
+#☆SQLtable設定
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#update = エンティティが変更されたらその変更をDBに反映する
+#validate = エンティティが変更されてもDBは変更しない
+#spring.jpa.hibernate.ddl-auto=update
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+spring.jpa.hibernate.ddl-auto=validate
+#--------------------------------------------------------------------
+#☆メール設定
+spring.mail.host=sys-engineern.jp
+spring.mail.port=587
+spring.mail.username=regist@sys-engineern.jp
+spring.mail.password=xA5Y8EJkkv1NCaq043oH
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+#--------------------------------------------------------------------
+#☆SQLログ出力
+logging.level.org.hibernate.SQL=debug
+
+# バインドパラメータ出力
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder=trace
+logging.level.org.hibernate.type.EnumType=trace
+#--------------------------------------------------------------------
+#テスト用！ SQLserver設定
+#spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=system_engineern_TEST
+#spring.datasource.username=BLADERUNNER2049
+#spring.datasource.password=
+#spring.datasource.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#--------------------------------------------------------------------
+#☆アップロードファイル設定
+#アップロードファイルサイズ制限設定
+#spring.servlet.multipart.max-file-size=1MB
+#spring.servlet.multipart.max-request-size=1MB
+
+
+#アップロードファイルの確認遅延設定
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#MultipartExceptionの発生タイミング変更、コントローラーの@ExceptionHandlerで補足できるようになる
+#ExceptionAdviceを使用しなくても良くなった
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+##spring.servlet.multipart.resolve-lazily=true
+#--------------------------------------------------------------------
+#☆外出しにしたURL 外出しにすることで変更が容易になる
+#
+syseng.url = "http://localhost:8080"
+
+#○画像アップロードパス
+#ローカル
+#画像アップロード先
+syseng.imgUploadPath = src/main/resources/static/image/upload/
+#画像バックアップ先
+syseng.imgUploadPathBackUp = src/main/resources/static/image/upload/
+
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+#サーバー
+#画像アップロード先
+#syseng.imgUploadPath = "/opt/tomcat/webapps/syseng/WEB-INF/classes/static/image/upload/"
+#画像バックアップ先
+#syseng.imgUploadPathBackUp = "/opt/tomcat/upload/"
+#--------------------------------------------------------------------
+
+spring.datasource.tomcat.test-on-borrow=true
+#spring.datasource.dbcp.validation-query=SELECT 1
+
+#double transaction防止のために作成したWebMvcConfig.java用にビーンの上書きを許可する
+spring.main.allow-bean-definition-overriding=true
+
+
+
+

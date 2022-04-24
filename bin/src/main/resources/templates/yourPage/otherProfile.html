@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org">
+<!--/* headの引き継ぎ部分 */-->
+<head
+	th:replace="layout/baseLayout :: base-head(${otherUser.userDetail.userDisplayName}+'さんのプロフィール', ~{::link}, ~{::script})">
+</head>
+<!--/* headの引き継ぎ部分 ここまで */-->
+
+
+<body>
+	<!--/* navbar引き継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: navbar"></div>
+	<!--/* navbar引き継ぎ部分 ここまで */-->
+
+	<!--/* sidebar引き継ぎ部分 */-->
+	<div th:replace="layout/myPageLayout :: sidebar"></div>
+	<!--/* sidebar引き継ぎ部分 ここまで */-->
+
+	<div class="container">
+		<div class="heading-icon mx-sm-4">
+			<h5>
+				<img class="mb-2" th:src="@{/image/genjiko_icon/s_10_01.png}">
+				<th:block th:text="${otherUser.userDetail.userDisplayName}" />
+				さんのプロフィール
+			</h5>
+		</div>
+		<div class="profile other">
+			<div>
+				<div class="row">
+					<div class="col-sm-3 col-md-12 col-lg-3 profile-img">
+						<div class="d-flex align-items-center pt-1">
+							<th:block th:switch="${otherUser.userDetail.imgPath}">
+								<img th:case="null" th:src="@{/image/noimg.png}"
+									class="profile icon">
+								<img th:case="''" th:src="@{/image/noimg.png}"
+									class="profile icon">
+								<img th:case="*"
+									th:src="@{/image/upload/{imgPath}(imgPath=${otherUser.userDetail.imgPath})}"
+									class="profile icon">
+							</th:block>
+						</div>
+					</div>
+					<div
+						class="col-sm-9 col-md-12 col-lg-9 d-flex flex-column justify-content-center">
+						<div class="my-lg-1">
+							<th:block th:text="'@'+${otherUser.username}"
+								style="padding-top: 2em;" />
+						</div>
+						<div class="my-1">
+							<span class="user-display-name"> <th:block
+									th:switch="${otherUser.userDetail.userDisplayName}">
+									<th:block th:case="null" th:text="'　'" />
+									<th:block th:case="''" th:text="'　'" />
+									<th:block th:case="*"
+										th:text="${otherUser.userDetail.userDisplayName}" />
+								</th:block>
+							</span>
+						</div>
+						<div class="my-lg-1">
+							<th:block
+								th:switch="${otherUser.userDetail.userShortDescription}">
+								<th:block th:case="null" th:text="'　'" />
+								<th:block th:case="''" th:text="'　'" />
+								<th:block th:case="*"
+									th:text="${otherUser.userDetail.userShortDescription}" />
+							</th:block>
+						</div>
+						<div class="my-1">
+							<a
+								th:href="@{/user/yourpage/follow?userId={userId}
+							(userId=${otherUser.userId})}"
+								th:text="${#arrays.length(otherFollowing)}+'フォロー中'" class="mr-2">
+							</a> <a
+								th:href="@{/user/yourpage/follower?userId={userId}
+							(userId=${otherUser.userId})}"
+								th:text="${#arrays.length(otherFollowers)}+'フォロワー'"> </a>
+						</div>
+					</div>
+				</div>
+				<div class="mx-lg-2 my-3">
+					<th:block th:text="${otherUser.userDetail.userDescription}" />
+				</div>
+				<div class="profile button float-right">
+					<form th:action="@{/user/yourpage/other_profile}"
+						th:object="${followFollowerForm}" method="post">
+						<input type="hidden" th:value="${otherUser.userId}" name="userId">
+						<a
+							th:href="@{/user/mypage/direct_message?recieverUserId={recieverUserId}
+							(recieverUserId=${otherUser.userId})}"
+							class="btn1 mr-1">メッセージ</a>
+						<th:block th:if="${#arrays.contains(following,otherUser)}">
+							<button type="submit" name="unfollow" class="btn4 d-trans">フォローを外す</button>
+						</th:block>
+						<th:block th:unless="${#arrays.contains(following,otherUser)}">
+							<button type="submit" name="follow" class="btn1 d-trans">フォローする</button>
+						</th:block>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!--/* footer引きｍ継ぎ部分 */-->
+	<div th:replace="layout/myPageLayout :: sidebar-close"></div>
+	<!--/* footer引き継ぎ部分 ここまで */-->
+
+	<!--/* footer引き継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<!--/* footer引き継ぎ部分 ここまで */-->
+
+	<!--/* menuscript引き継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+	<!--/* menuscript引き継ぎ部分 ここまで */-->
+</body>
+</html>

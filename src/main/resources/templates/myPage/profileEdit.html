@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org">
+<!--/* headの引き継ぎ部分 */-->
+<head
+	th:replace="layout/baseLayout :: base-head('マイページ編集', ~{::link}, ~{::script})">
+</head>
+<!--/* headの引き継ぎ部分 ここまで */-->
+
+
+<body>
+	<!--/* navbar引き継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: navbar"></div>
+	<!--/* navbar引き継ぎ部分 ここまで */-->
+
+	<!--/* sidebar引き継ぎ部分 */-->
+	<div th:replace="layout/myPageLayout :: sidebar"></div>
+	<!--/* sidebar引き継ぎ部分 ここまで */-->
+
+	<div class="container">
+		<form th:action="@{/user/mypage/profileedit}"
+			th:object="${myPageUserEditForm}" enctype="multipart/form-data"
+			method="post">
+			<div class="profile user-edit">
+				<div class="profile icon-edit">
+					<label> <th:block th:switch="${user.userDetail.imgPath}">
+							<img th:case="null" th:src="@{/image/noimg.png}">
+							<img th:case="''" th:src="@{/image/noimg.png}">
+							<img th:case="*"
+								th:src="@{/image/upload/{imgPath}(imgPath=${user.userDetail.imgPath})}">
+						</th:block>
+						<input type="file" name="uploadFile" id="img-edit" /><br />
+						画像を変更する
+					</label>
+				</div>
+                <th:block th:if="${fileSizeError}"><p class="error-message">画像ファイルはサイズ1MB以下でアップロードしてください。</p></th:block>
+                <th:block th:if="${fileTypeError}"><p class="error-message">画像ファイルは.jpg、.png、.gif形式のいずれかでアップロードしてください。</p></th:block>
+				<div class="row">
+					<label for="name" class="col-xl-2 col-form-label">ユーザー名</label>
+					<div class="col-xl-10">
+						<input type="text" th:value="${user.username}" name="username"
+							class="form-control" readonly /> <small class="form-text text-right">※
+							変更できません</small>
+
+					</div>
+				</div>
+				<div class="row">
+					<label for="display-name" class="col-xl-2 col-form-label">名前</label>
+					<div class="col-xl-10">
+						<input type="text" th:value="${user.userDetail.userDisplayName}"
+							name="userDisplayName" class="form-control" placeholder="名前を入力する" onkeyup="textLengthCountForInputs(value,10,1)"/>
+							<small class="form-text text-right" th:id="inputLength1" th:text="'　'" ></small>
+					</div>
+				</div>
+				<div class="row">
+					<label for="short-description" class="col-xl-2 col-form-label">一言</label>
+					<div class="col-xl-10">
+						<input type="text"
+							th:value="${user.userDetail.userShortDescription}"
+							name="userShortDescription" class="form-control"
+							placeholder="一言を入力する" onkeyup="textLengthCountForInputs(value,25,2)" />
+						<small class="form-text text-right" th:id="inputLength2" th:text="'　'" ></small>
+					</div>
+				</div>
+				<div class="row">
+					<label for="description" class="col-xl-2 col-form-label">自己紹介</label>
+					<div class="col-xl-10">
+						<textarea th:text="${user.userDetail.userDescription}"
+							name="userDescription" class="form-control"
+							placeholder="自己紹介を入力する" id="auto-height" onkeyup="textLengthCountForInputs(value,150,3)"></textarea>
+							<small class="form-text text-right" th:id="inputLength3" th:text="'　'" ></small>
+					</div>
+				</div>
+				<div class="profile button">
+					<button type="submit" name="profileEdit"
+						class="btn1 float-right my-2 d-trans" id="validated-btn">保存</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+	<!--/* footer引き継ぎ部分 */-->
+	<div th:replace="layout/myPageLayout :: sidebar-close"></div>
+	<!--/* footer引き継ぎ部分 ここまで */-->
+
+	<!--/* footer引き継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<!--/* footer引き継ぎ部分 ここまで */-->
+
+	<!--/* menuscript引き継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+	<!--/* menuscript引き継ぎ部分 ここまで */-->
+
+
+</body>
+</html>

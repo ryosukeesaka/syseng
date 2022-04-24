@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<!--/* headの引き継ぎ部分 */-->
+<head
+	th:replace="layout/baseLayout :: base-head('コミュニティ一覧', ~{::link}, ~{::script})">
+</head>
+<!--/* headの引き継ぎ部分 ここまで */-->
+<body>
+	<!--/*  navbar */-->
+	<div th:replace="layout/baseLayout :: navbar"></div>
+	<!--/* sidebar */-->
+	<div th:replace="layout/myPageLayout :: sidebar"></div>
+	<!--/* コミュニティ一覧 */-->
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<h5 class="community title">コミュニティ一覧</h5>
+				<div class="community wrapper">
+					<th:block th:each="list:${community}">
+						<div class="community list">
+							<div class="community subtitle">コミュニティ名</div>
+							<a th:href="@{/user/community/detail_{id}(id =
+									${list.communityId})}"  th:text="${list.communityName}"></a>
+						</div>
+					</th:block>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>

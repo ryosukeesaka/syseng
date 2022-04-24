@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://wwwthymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="layout/baseLayout :: base-head('ユーザー名照会', ~{::link}, ~{::script})">
+</head>
+<body>
+	<div th:replace="layout/baseLayout :: navbar"></div>
+	<div class="container" style="max-width: 760px;">
+		<div class="heading-icon">
+			<h2 class="mb-3 mt-4">
+				<img class="mb-2 mr-2" th:src="@{image/genjiko_icon/s_10_05.png}" />ユーザーネームを忘れた場合
+			</h2>
+		</div>
+		<form class="form-signin" th:action="@{/inquiry_username}" th:object="${lostUsernameForm}" method="post">
+			<p>しすてむえんじに庵にご登録いただきました、メールアドレスとパスワードを入力して送信ボタンを押してください。</p>
+			<p th:if="${fieldError}">
+				<em class="error-message">Eメールアドレスかパスワードが正しくありません。</em>
+			</p>
+			<input type="email" class="form-control mt-3" placeholder="メールアドレス" name="mailAddress" />
+			<P th:errors="*{mailAddress}" class="error-message"></P>
+			<input type="password" class="form-control mt-3" placeholder="パスワード" name="password" />
+			<p th:errors="*{password}" class="error-message"></p>
+			<input type="submit" class="btn btn-lg btn-info btn-block mt-3 nav3" value="送信" />
+			<a th:href="@{/login}">ログインはこちら</a>
+
+		</form>
+	</div>
+
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+
+</body>
+</html>

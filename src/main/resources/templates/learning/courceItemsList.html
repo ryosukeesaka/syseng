@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<!--/* headの引き継ぎ部分 */-->
+<head th:replace="layout/baseLayout :: base-head('レッスン：しすてむえんじに庵', ~{::link}, ~{::script})">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+</head>
+<!--/* headの引き継ぎ部分 ここまで */-->
+<body class="test">
+	<!--/*  navbar */-->
+	<div th:replace="layout/baseLayout :: navbar"></div>
+
+	<div class="container">
+		<div class="row">
+			<div class="heading-icon">
+				<h2 class="mt-4 mb-3" th:inline="text">
+					<img class="mb-2 mr-2" th:src="@{/image/genjiko_icon/s_10_01.png}" />[[${courceDetail.courceDetailName}]]
+				</h2>
+			</div>
+		</div>
+		<div class="row">
+
+			<th:block th:each="obj,stat:${courceItem}">
+				<div class="col-lg-3 col-md-4 col-6 mb-2">
+					<div class="learning items content-box-outer" data-aos="fade-right" th:attr="data-aos-delay=${stat.count} + '00'">
+						<div class="learning items content-box">
+							<div class="learning items content">
+								<a th:href="@{/#}" class="" th:text="${obj.courceItemName}"></a>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</th:block>
+
+		</div>
+
+	</div>
+	<div class="container">
+		<button type="button" class="btn btn-secondary btn-block mb-3" data-toggle="collapse" data-target="#comment-collapse" style="background-color: #002247;">comment</button>
+	</div>
+
+	<div class="learning cource-message-area">
+		<div id="comment-collapse" class="learning collapse" th:classappend="${redirected == '1'} ? show">
+			<div class="container">
+				<div style="position: relative;">
+					<ul class="list-group learning message-ul">
+						<!--/* th:each 外（obj,stat） */-->
+						<th:block th:each="obj,stat:${courceMessageList}">
+							<li class="list-group-item">
+								<div class="d-flex justify-content-between">
+									<div>
+										<a th:href="@{/user/yourpage/other_profile?userId={userId}(userId=${obj.users.userId})}" th:text="'@' + ${obj.users.username}" class="ml-1" style="font-size: 12px; color: #000080;"></a>
+										<p th:text="${obj.users.userDetail.userDisplayName}" class="mt-0 ml-2 mb-0 learning cource-text" />
+									</div>
+									<div>
+										<div class="d-flex">
+
+
+											<th:block th:unless="${#arrays.isEmpty(obj.courceReply)}">
+
+												<a class="btn mr-1 learning cource-text btn1" data-toggle="collapse" th:href="@{#reply-collapse} + ${stat.count}">表示</a>
+											</th:block>
+											<!-- Button trigger modal -->
+											<a type="button" class="btn mr-1 learning cource-text btn2" data-toggle="modal" th:href="@{#courceReplyForm}+${stat.count}">返信</a>
+
+											<th:block th:if="${obj.users.username} == ${#authentication.principal.username}">
+
+												<form th:action="@{/user}" th:object="${courceMessageDeleteForm}" method="post">
+													<input type="hidden" name="userId" th:value="${obj.users.userId}" /> <input type="hidden" name="messageId" th:value="${obj.messageId }" /> <input type="hidden" name="courceUrl" th:value="${courceDetail.courceTitle.cource.url}" /> <input type="hidden" name="courceDetailUrl"
+														th:value="${courceDetail.url}" />
+
+													<button type="submit" name="messageDelete" class="btn mr-1 learning cource-text btn3">削除</button>
+												</form>
+											</th:block>
+										</div>
+									</div>
+								</div>
+								<p th:text="${obj.messageBody}" class="learning cource-text ml-4" style="white-space: pre-wrap;"></p>
+								<div class="modal fade" th:id="@{courceReplyForm} + ${stat.count}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+											<div class="modal-titel">
+											<h6 class="mt-0 mb-0">返信メッセージ入力</h6>
+											</div>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<!--/* モーダルボディ */-->
+											<form th:action="@{/user}" th:object="${courceReplyForm}" method="post" name="courceReplyPostForm" autocomplete="off">
+												<div class="modal-body">
+													<div class="text-left learning comment-border-box">
+													<div class="d-flex">
+														<div class="direct-message selected-img">
+																<!--/* divをaタグで囲っているためエラーが出ています */-->
+																<th:block th:switch="${obj.users.userDetail.imgPath}">
+																	<img th:case="null" th:src="@{/image/noimg.png}">
+																	<img th:case="''" th:src="@{/image/noimg.png}">
+																	<img th:case="*" th:src="@{/image/upload/{imgPath}(imgPath=${obj.users.userDetail.imgPath})}">
+																</th:block>
+														</div>
+														<div class="mt-md-1 mt-xl-4">
+														<a th:href="@{/user/yourpage/other_profile?userId={userId}
+                                                        (userId=${obj.users.userId})}" th:text="'@' + ${obj.users.username}" class="ml-1" style="font-size: 12px; color: #000080;"></a>
+
+														<p th:text="${obj.users.userDetail.userDisplayName}" class="mt-0 ml-2 mb-0 learning cource-text" />
+														</div>
+														</div>
+														<hr class="mt-1 mb-1">
+														<p th:text="${obj.messageBody}" class="learning cource-text ml-4" style="white-space: pre-wrap;"></p>
+
+													</div>
+													<div class="learning vertical-line-left">
+														<br>
+													</div>
+													<input type="hidden" name="courceMessageId" th:value="${obj.messageId}"> <input type="hidden" name="courceUrl" th:value="${url}"> <input type="hidden" name="courceDetailId" th:value="${courceDetail.courceDetailId}">
+													<div th:with="onkey = 'textLengthCount(value,255,' + ${stat.count} + ')'">
+														<textarea name="courceReply" id="test1" style="resize:none;" class="learning learning-input form-control" th:attr="onkeyup=${onkey}"></textarea>
+													</div>
+													<div class="text-right">
+													<p class="mb-1" th:id="'inputLength' + ${stat.count}">0/255</p>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="submit" th:id="'validated-btn' + ${stat.count}"  class="btn mr-1 learning cource-text btn2 d-trans" disabled name="courceReplyPost">送 信</button>
+													<button type="button" class="btn mr-1 learning cource-text btn3" data-dismiss="modal">CANCEL</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+
+								<div th:id="@{reply-collapse} + ${stat.count}" class="collapse" th:classappend="${longReplyPosted == obj.messageId} ? show">
+									<!--/* th:each 内（obj2） */-->
+									<div class="ml-5" th:each="obj2:${obj.courceReply}">
+										<hr>
+										<div class="d-flex justify-content-between">
+											<div>
+												<a th:href="@{/user/yourpage/other_profile?userId={userId}(userId=${obj2.users.userId})}" th:text="'@' + ${obj2.users.username}" class="mb-0" style="font-size: 12px; color: #000080;"></a>
+												<p th:text="${obj2.users.userDetail.userDisplayName}" class="mt-0 ml-2 mb-0 learning cource-text" />
+											</div>
+											<div>
+												<th:block th:if="${obj2.users.username} == ${#authentication.principal.username}">
+
+													<form th:action="@{/user}" th:object="${courceReplyDeleteForm}" method="post">
+
+														<input type="hidden" name="replyId" th:value="${obj2.replyId }" /> <input type="hidden" name="courceUrl" th:value="${courceDetail.courceTitle.cource.url}" /> <input type="hidden" name="courceDetailUrl" th:value="${courceDetail.url}" /> <input type="hidden" name="courceMessageId"
+															th:value="${obj.messageId}">
+
+														<button type="submit" name="replyDelete" class="btn btn3 learning cource-text">削除</button>
+													</form>
+												</th:block>
+											</div>
+										</div>
+										<p th:text="${obj2.replyBody}" class="ml-4 mb-0 learning cource-text" />
+									</div>
+									<!--/* th:each 内 (obj2) ここまで */-->
+								</div>
+							</li>
+						</th:block>
+						<!--/* th:each 外（obj,stat）ここまで */-->
+
+					</ul>
+					<a type="button" class="learning fixed-btn mt-2" data-toggle="modal" href="#message-post"> <i class="fas fa-plus"></i>
+					</a>
+					<div class="modal fade" id="message-post" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+								<div class="modal-titel">
+											<h6 class="mt-0 mb-0">新規メッセージ入力</h6>
+											</div>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+
+								</div>
+								<form th:action="@{/user}" th:object="${courceMessageObject}" method="post" autocomplete="off">
+									<div class="modal-body">
+										<div class="text-left">
+											<div class="d-flex mb-4">
+												<div class="direct-message selected-img">
+
+													<th:block th:switch="${user.userDetail.imgPath}">
+														<img th:case="null" th:src="@{/image/noimg.png}">
+														<img th:case="''" th:src="@{/image/noimg.png}">
+														<img th:case="*" th:src="@{/image/upload/{imgPath}(imgPath=${user.userDetail.imgPath})}">
+													</th:block>
+												</div>
+												<div class="mt-md-1 mt-xl-4">
+													<p th:text="'@'+${user.username}" style="font-size: 12px;" class="mb-1" />
+													<p th:text="${user.userDetail.userDisplayName}" class="learning cource-text ml-2" />
+												</div>
+											</div>
+										</div>
+
+										<textarea name="messageBody" class="form-control" onkeyup="textLengthCount(value,255,'NewMessage')"></textarea>
+										<div class="text-right">
+										<p class="mb-1" id="inputLengthNewMessage">0/255</p>
+										</div>
+										<input type="hidden" name="courceDetailId" th:value="${courceDetail.courceDetailId}"> <input type="hidden" name="courceUrl" th:value="${url}">
+
+
+									</div>
+									<div class="modal-footer">
+										<button type="submit" name="messagePost" id="validated-btnNewMessage" class="btn btn-secondary nav2 d-trans">送 信</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--/* footer */-->
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+</body>
+
+</html>

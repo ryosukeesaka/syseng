@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<!--/* headの引き継ぎ部分 */-->
+<head
+	th:replace="layout/baseLayout :: base-head('コースタイトル一覧', ~{::link}, ~{::script})">
+</head>
+<!--/* headの引き継ぎ部分 ここまで */-->
+<body>
+	<!--/*  navbar */-->
+	<div th:replace="layout/baseLayout :: navbar"></div>
+
+	<!--/* sidebar */-->
+	<div th:replace="layout/myPageLayout :: sidebar"></div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="cource-title my-3">
+					<div class="heading-icon">
+						<h4>
+							<img class="mb-2" th:src="@{/image/genjiko_icon/s_10_01.png}">
+							<th:block th:text="${cource.courceName}" class="font-weight-bold"></th:block>
+						</h4>
+						<p th:text="${cource.courceDescription}"></p>
+					</div>
+					<th:block th:each="obj,stat:${titleList}">
+						<div class="py-3 mb-4 mb-sm-5 logo2 font-weight-bold"
+							th:classappend="${#numbers.formatInteger(obj.complete,1)}==100?cource-title-list"
+							th:attr="data-aos=${stat.count}%2==0 ? 'fade-right':'fade-left'"
+							data-aos-delay="100">
+							<h5 th:text="${obj.courceTitleName}" class="font-weight-bold"></h5>
+							<p th:text="${obj.courceTitleDescription}"></p>
+							<div>
+								<div class="row">
+									<div class="py-1 py-sm-2 col-12 col-lg-7 col-xl-8">
+										<div class="d-flex">
+											<div style="width: 90%">
+												<div class="progress"
+													style="height: 20px; border-radius: 0.5rem; background: #fff;">
+													<div class="progress-bar" role="progressbar"
+														th:style="'width: ' + ${#numbers.formatInteger(obj.complete,1)} + '%; background: #002247;'"
+														aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+											<div
+												th:text="${#numbers.formatInteger(obj.complete,1)} + '%'"
+												class="text-center pl-2"></div>
+										</div>
+									</div>
+									<div
+										class="d-flex justify-content-between my-2 col-12 col-lg-5 col-xl-4 text-center">
+										<div class="col-6 px-1">
+											<th:block
+												th:switch="${#numbers.formatInteger(obj.complete,1)}">
+												<a th:case="100"
+													th:href="@{/user/cource_{url}/detail_{title_url}/item_{item_url}(url=${url},title_url=${obj.url},item_url=${obj.courceItem.url})}"
+													class="btn2 px-0 py-1 py-md-1 d-block"
+													onclick="alert('コンテンツはまだ出来ていません！')" th:text="'復習する'"></a>
+												<a th:case="0"
+													th:href="@{/user_/cource_{url}/detail_{title_url}/item_{item_url}(url=${url},title_url=${obj.url},item_url=${obj.courceItem.url})}"
+													class="btn2 px-0 py-1 py-md-1 d-block"
+													onclick="alert('コンテンツはまだ出来ていません！')" th:text="学習を始める"></a>
+												<a th:case="*"
+													th:href="@{/user/cource_{url}/detail_{title_url}/item_{item_url}(url=${url},title_url=${obj.url},item_url=${obj.progressCourceItem.url})}"
+													class="btn2 px-0 py-1  d-block"
+													onclick="alert('コンテンツはまだ出来ていません！')" th:text="'続きから'"></a>
+											</th:block>
+										</div>
+										<div class="col-6 px-1">
+											<a
+												th:href="@{/user/cource_{url}/detail_{title_url}(url=${cource.url},title_url=${obj.url})}"
+												class="btn5 px-0 py-1 d-block"
+												style="border: 1px solid #002247;">コース詳細</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</th:block>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--/* sidebar close */-->
+	<div th:replace="layout/myPageLayout :: sidebar-close"></div>
+
+	<!--/* footer */-->
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+</body>
+
+</html>

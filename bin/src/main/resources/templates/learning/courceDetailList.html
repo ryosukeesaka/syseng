@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<!--/* headの引き継ぎ部分 */-->
+<head
+	th:replace="layout/baseLayout :: base-head('コース詳細', ~{::link}, ~{::script})">
+</head>
+<!--/* headの引き継ぎ部分 ここまで */-->
+<body>
+	<!--/*  navbar */-->
+	<div th:replace="layout/baseLayout :: navbar"></div>
+
+	<!--/* sidebar */-->
+	<div th:replace="layout/myPageLayout :: sidebar"></div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="my-3">
+					<div class="heading-icon">
+						<h4>
+							<img class="mb-2" th:src="@{/image/genjiko_icon/s_10_01.png}">
+							<th:block th:text="${courceTitle.courceTitleName}"
+								class="font-weight-bold" data-aos="fade-up"></th:block>
+						</h4>
+					</div>
+					<th:block th:each="obj,stat:${courceDetailList}">
+						<div class="learning-items">
+							<button th:text="${stat.count}+'.　'+${obj.courceDetailName}"
+								class="detail-btn nav8 btn-block mb-3 mb-sm-4 font-weight-bold text-left"
+								data-aos="fade-up" th:attr="data-aos-delay=${stat.count}+'00'"
+								data-toggle="collapse"
+								th:data-target="'#detail-collapse'+${stat.count}"
+								aria-expand="false"></button>
+							<div class="collapse" th:id="'detail-collapse'+${stat.count}">
+								<div class="row">
+									<th:block th:each="obj2,stat2:${obj.courceItem}">
+										<div class="col-xl-3 col-lg-4 col-6 mb-2">
+											<div class="learning items content-box-outer"
+												data-aos="fade-right"
+												th:attr="data-aos-delay=${stat2.count} + '00'">
+												<div class="learning items content-box">
+													<div class="learning items content">
+														<a onclick="alert('コンテンツはまだ出来ていません！')"
+															th:href="@{/user/cource_{url}/detail_{title_url}/item_{item_url}(url=${url},title_url=${courceTitle.url},item_url=${obj2.url})}"
+															class="font-weight-bold" th:text="${obj2.courceItemName}"></a>
+													</div>
+												</div>
+												<th:block th:each="obj3:${comp}">
+													<div
+														th:if="${#strings.toString(obj2.courceItemId)==obj3.completeItemId}">
+														<img class="learning items check-img"
+															th:src="@{/image/check.png}">
+													</div>
+												</th:block>
+											</div>
+										</div>
+									</th:block>
+								</div>
+							</div>
+						</div>
+					</th:block>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--/* sidebar close */-->
+	<div th:replace="layout/myPageLayout :: sidebar-close"></div>
+
+	<!--/* footer */-->
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+
+</body>
+
+</html>

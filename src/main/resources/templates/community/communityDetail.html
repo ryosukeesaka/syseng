@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org">
+<!--/* headの引き継ぎ部分 */-->
+<head
+	th:replace="layout/baseLayout :: base-head('VBAを学ぼう', ~{::link}, ~{::script})">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+	integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+	crossorigin="anonymous">
+</head>
+<!--/* headの引き継ぎ部分 ここまで */-->
+<body>
+	<!--/*  navbar */-->
+	<div th:replace="layout/baseLayout :: navbar"></div>
+
+	<!--/* sidebar */-->
+	<div th:replace="layout/myPageLayout :: sidebar"></div>
+
+	<!--/* コミュニティ詳細 */-->
+	<div class="container" style="padding: 0;">
+		<div class="m-1 m-lg-3">
+			<div>
+				<form action="#" th:action="@{/user/community_detail}"
+					th:object="${communityForm}" method="post">
+					<input type="hidden" th:value="${community.communityId}"
+						name="communityId" />
+					<div class="heading-icon">
+						<h5>
+							<img class="mb-2" th:src="@{/image/genjiko_icon/s_10_01.png}">
+							<th:block th:text="${community.communityName}"></th:block>
+						</h5>
+					</div>
+					<p th:text="${community.communityDescription}"></p>
+					<div class="d-flex justify-content-end mb-3">
+						<button type="submit" name="link"
+							class="btn mr-2 learning cource-text btn1">
+							参加メンバー
+							<th:block th:text="${#lists.size(userList)}"></th:block>
+							人
+						</button>
+						<th:block th:if="${#arrays.contains(community.users,loginUser)}">
+							<button type="submit" name="withdrawal"
+								class="btn mr-1 learning cource-text btn3">退会する</button>
+						</th:block>
+						<th:block
+							th:unless="${#arrays.contains(community.users,loginUser)}">
+							<button type="submit" name="join"
+								class="btn mr-1 learning cource-text btn1">参加する</button>
+						</th:block>
+					</div>
+				</form>
+			</div>
+			<th:block th:if="${#arrays.contains(community.users,loginUser)}">
+				<div id="commu-scroll">
+					<div class="community comment-tag"
+						style="background-color: #002247;">comment</div>
+					<div class="learning cource-message-area">
+						<div style="position: relative;">
+							<ul class="list-group learning message-ul">
+								<!--/* th:each 外（obj,stat） */-->
+								<th:block th:each="list,stat:${messageList}">
+									<li class="list-group-item">
+										<div class="d-flex justify-content-between">
+											<div class="mb-sm-1">
+												<th:block
+													th:if="${list.users.username} == ${#authentication.principal.username}">
+													<div>
+														<a th:href="@{/user/mypage/profile}"> <th:block
+																th:switch="${list.users.userDetail.imgPath}">
+																<img th:case="null" th:src="@{/image/noimg.png}">
+																<img th:case="''" th:src="@{/image/noimg.png}">
+																<img th:case="*"
+																	th:src="@{/image/upload/{imgPath}(imgPath=${list.users.userDetail.imgPath})}">
+															</th:block>
+														</a>
+													</div>
+													<div class="p-1">
+														<a th:href="@{/user/mypage/profile}"> <!--/* divをaタグで囲っているためエラーが出ています */-->
+															<div
+																style="justify-content: space-between; display: flex;">
+																<div>
+																	<div>
+																		<th:block th:text="'@'+${list.users.username}" />
+																	</div>
+																	<div>
+																		<th:block
+																			th:text="${list.users.userDetail.userDisplayName}" />
+																	</div>
+																</div>
+															</div>
+														</a>
+													</div>
+												</th:block>
+												<th:block
+													th:unless="${list.users.username} == ${#authentication.principal.username}">
+													<div>
+														<a
+															th:href="@{/user/yourpage/other_profile?userId={userId}(userId=${list.users.userId})}">
+															<th:block th:switch="${list.users.userDetail.imgPath}">
+																<img th:case="null" th:src="@{/image/noimg.png}">
+																<img th:case="''" th:src="@{/image/noimg.png}">
+																<img th:case="*"
+																	th:src="@{/image/upload/{imgPath}(imgPath=${list.users.userDetail.imgPath})}">
+															</th:block>
+														</a>
+													</div>
+													<div class="p-1">
+														<a
+															th:href="@{/user/yourpage/other_profile?userId={userId}(userId=${list.users.userId})}">
+															<!--/* divをaタグで囲っているためエラーが出ています */-->
+															<div
+																style="justify-content: space-between; display: flex;">
+																<div>
+																	<div>
+																		<th:block th:text="'@'+${list.users.username}" />
+																	</div>
+																	<div>
+																		<th:block
+																			th:text="${list.users.userDetail.userDisplayName}" />
+																	</div>
+																</div>
+															</div>
+														</a>
+													</div>
+												</th:block>
+											</div>
+											<div>
+												<div class="d-flex">
+													<th:block
+														th:if="${list.users.username} == ${#authentication.principal.username}">
+														<form action="#" th:action="@{/user/community_detail}"
+															th:object="${messageDeleteForm}" method="post">
+															<input type="hidden" name="userId"
+																th:value="${list.users.userId}" /> <input type="hidden"
+																name="messageId" th:value="${list.messageId }" />
+															<button type="submit" name="messageDelete"
+																class="mr-1 learning cource-text btn3">削除</button>
+														</form>
+													</th:block>
+													<th:block th:unless="${#arrays.isEmpty(list.reply)}">
+														<a class="mr-1 learning cource-text btn1"
+															data-toggle="collapse"
+															th:href="@{#reply-collapse} + (${page}*20+${stat.count})"
+															style="border: 1px solid #002247;">返信<th:block
+																th:text="${#lists.size(list.reply)}"></th:block>件
+														</a>
+													</th:block>
+
+													<!-- Button trigger modal -->
+
+														<a type="button"
+															class="mr-1 learning cource-text btn2"
+															data-toggle="modal" th:href="@{#replyForm}+(${page}*20+${stat.count})"
+															style="color: #fff;">返信</a>
+
+												</div>
+											</div>
+										</div> <!-- /*コメント返信*/ -->
+										<p th:text="${list.messageBody}" class="learning mb-2"
+											style="white-space: pre-wrap;"></p>
+										<div class="learning date-time">
+											<th:block
+												th:text="${#dates.format(list.createdAt, 'yyyy年MM月dd日 HH時mm分')}"></th:block>
+										</div>
+										<div class="modal fade" th:id="@{replyForm} + (${page}*20+${stat.count})"
+											tabindex="-1" role="dialog"
+											aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered"
+												role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<div class="modal-titel">
+															<h6 class="mt-0 mb-0">返信メッセージ入力</h6>
+														</div>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<!--/* モーダルボディ */-->
+													<form action="#" th:action="@{/user/community_detail}"
+														th:object="${replyForm}" method="post" autocomplete="off">
+														<div class="modal-body">
+															<div class="text-left learning comment-border-box">
+																<div class="d-flex">
+																	<div class="direct-message selected-img">
+																		<!--/* divをaタグで囲っているためエラーが出ています */-->
+																		<th:block th:switch="${list.users.userDetail.imgPath}">
+																			<img th:case="null" th:src="@{/image/noimg.png}">
+																			<img th:case="''" th:src="@{/image/noimg.png}">
+																			<img th:case="*"
+																				th:src="@{/image/upload/{imgPath}(imgPath=${list.users.userDetail.imgPath})}">
+																		</th:block>
+																	</div>
+																	<div class="mt-2">
+																		<a
+																			th:href="@{/user/yourpage/other_profile?userId={userId} (userId=${list.users.userId})}"
+																			th:text="'@' + ${list.users.username}" class="ml-1"
+																			style="font-size: 12px; color: #000080;"></a>
+																		<p th:text="${list.users.userDetail.userDisplayName}"
+																			class="mt-0 ml-2 mb-0 learning cource-text" />
+																	</div>
+																</div>
+																<hr class="mt-1 mb-1">
+																<p th:text="${list.messageBody}"
+																	class="learning cource-text mx-3 mt-2"
+																	style="white-space: pre-wrap;"></p>
+
+															</div>
+															<div class="learning vertical-line">
+																<div class="learning line-center"></div>
+															</div>
+															<input type="hidden" name="messageId"
+																th:value="${list.messageId}">
+															<div
+																th:with="onkey = 'textLengthCount(value,255,' + (${page}*20+${stat.count}) + ')'">
+																<textarea name="replyBody"
+																	class="learning learning-input form-control"
+																	placeholder="返信メッセージを入力" th:attr="onkeyup=${onkey}"></textarea>
+															</div>
+															<div class="text-right">
+																<p class="mb-1" th:id="'inputLength' + (${page}*20+${stat.count})">0/255</p>
+															</div>
+														</div>
+														<div class="modal-footer">
+															<button type="submit"
+																th:id="'validated-btn' + (${page}*20+${stat.count})"
+																class="mr-1 learning cource-text btn2 d-trans"
+																name="reply" disabled>送 信</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div> <!-- /*返信の表示*/ -->
+										<div th:id="@{reply-collapse} + (${page}*20+${stat.count})"
+											class="collapse learning reply"
+											th:classappend="${longReplyPosted == list.messageId} ? show">
+											<!--/* th:each 内（obj2） */-->
+											<div class="ml-2 ml-xl-5" th:each="obj2:${list.reply}">
+												<hr>
+												<div class="d-flex justify-content-between">
+													<div class="d-flex">
+														<th:block
+															th:if="${obj2.users.username} == ${#authentication.principal.username}">
+															<div>
+																<a th:href="@{/user/mypage/profile}"> <th:block
+																		th:switch="${obj2.users.userDetail.imgPath}">
+																		<img th:case="null" th:src="@{/image/noimg.png}">
+																		<img th:case="''" th:src="@{/image/noimg.png}">
+																		<img th:case="*"
+																			th:src="@{/image/upload/{imgPath}(imgPath=${obj2.users.userDetail.imgPath})}">
+																	</th:block>
+																</a>
+															</div>
+															<a th:href="@{/user/mypage/profile}"> <!--/* divをaタグで囲っているためエラーが出ています */-->
+																<div>
+																	<div>
+																		<th:block th:text="'@' + ${obj2.users.username}"
+																			class="mb-0" style="font-size: 12px; color: #000080;"></th:block>
+																	</div>
+																	<div class="mt-0 ml-2 mb-0 learning cource-text">
+																		<th:block
+																			th:text="${obj2.users.userDetail.userDisplayName}"></th:block>
+																	</div>
+																</div>
+															</a>
+														</th:block>
+														<th:block
+															th:unless="${obj2.users.username} == ${#authentication.principal.username}">
+															<div>
+																<a
+																	th:href="@{/user/yourpage/other_profile?userId={userId}(userId=${obj2.users.userId})}">
+																	<th:block th:switch="${obj2.users.userDetail.imgPath}">
+																		<img th:case="null" th:src="@{/image/noimg.png}">
+																		<img th:case="''" th:src="@{/image/noimg.png}">
+																		<img th:case="*"
+																			th:src="@{/image/upload/{imgPath}(imgPath=${obj2.users.userDetail.imgPath})}">
+																	</th:block>
+																</a>
+															</div>
+															<a
+																th:href="@{/user/yourpage/other_profile?userId={userId}(userId=${obj2.users.userId})}">
+																<!--/* divをaタグで囲っているためエラーが出ています */-->
+																<div>
+																	<div>
+																		<th:block th:text="'@' + ${obj2.users.username}"
+																			class="mb-0" style="font-size: 12px; color: #000080;"></th:block>
+																	</div>
+																	<div class="mt-0 ml-2 mb-0 learning cource-text">
+																		<th:block
+																			th:text="${obj2.users.userDetail.userDisplayName}"></th:block>
+																	</div>
+																</div>
+															</a>
+														</th:block>
+													</div>
+													<div>
+														<th:block
+															th:if="${obj2.users.username} == ${#authentication.principal.username}">
+
+															<form action="#" th:action="@{/user/community_detail}"
+																th:object="${replyDeleteForm}" method="post">
+
+																<input type="hidden" name="replyId"
+																	th:value="${obj2.replyId }" /> <input type="hidden"
+																	name="messageId" th:value="${obj2.message.messageId }" />
+
+																<button type="submit" name="deleteReply"
+																	class="btn3 learning cource-text">削除</button>
+															</form>
+														</th:block>
+													</div>
+												</div>
+                                                <th:block th:each="line: ${obj2.replyBody.split('\r\n|\r|\n', -1)}">
+                                                    <p class="my-2 learning cource-text mt-1 mb-1" style="white-space: pre-wrap; line-height:1;"><th:block th:text="${line}" /><br /></p>
+                                                </th:block>
+												<!-- <p th:text="${obj2.replyBody}"
+													class="my-2 learning cource-text" /> -->
+												<div class="learning date-time">
+													<th:block
+														th:text="${#dates.format(obj2.createdAt, 'yyyy年MM月dd日 HH時mm分')}"></th:block>
+												</div>
+											</div>
+											<!--/* th:each 内 (obj2) ここまで */-->
+										</div>
+									</li>
+								</th:block>
+								<!--/* th:each 外（obj,stat）ここまで */-->
+							</ul>
+
+							<a type="button" class="learning fixed-btn my-2"
+								data-toggle="modal" href="#message-post"><i
+								class="fas fa-plus"></i></a>
+
+							<th:block th:each="list,stat:${messageList}">
+								<div class="modal fade" id="message-post" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalCenterTitle"
+									aria-hidden="true">
+									<div class="modal-dialog modal-xl modal-dialog-centered"
+										role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<div class="modal-titel">
+													<h6 class="mt-0 mb-0">新規メッセージ入力</h6>
+												</div>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+
+											</div>
+											<form action="#" th:action="@{/user/community_detail}"
+												th:object="${messageForm}" method="post" autocomplete="off">
+												<div class="modal-body">
+													<div class="text-left">
+														<div class="d-flex mb-1">
+															<div class="direct-message selected-img">
+
+																<th:block th:switch="${loginUser.userDetail.imgPath}">
+																	<img th:case="null" th:src="@{/image/noimg.png}">
+																	<img th:case="''" th:src="@{/image/noimg.png}">
+																	<img th:case="*"
+																		th:src="@{/image/upload/{imgPath}(imgPath=${loginUser.userDetail.imgPath})}">
+																</th:block>
+															</div>
+															<div class="mt-2">
+																<p th:text="'@'+${loginUser.username}"
+																	style="font-size: 12px;" class="mb-1" />
+																<p th:text="${loginUser.userDetail.userDisplayName}"
+																	class="learning cource-text ml-2" />
+															</div>
+														</div>
+													</div>
+
+													<textarea name="messageBody" class="form-control"
+														placeholder="メッセージを入力"
+														onkeyup="textLengthCount(value,255,'NewMessage')"></textarea>
+													<div class="text-right">
+														<p class="mb-1" id="inputLengthNewMessage">0/255</p>
+													</div>
+													<input type="hidden" th:value="${list.messageId}"
+														name="messageId"> <input type="hidden"
+														th:value="${community.communityId}"
+														name="community_community_id" />
+												</div>
+												<div class="modal-footer">
+													<button type="submit" id="validated-btnNewMessage" name="messagePost"
+														class="btn btn-secondary nav2 d-trans" disabled>送信</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</th:block>
+						</div>
+					</div>
+					<div class="commu-pagenation">
+						<a th:unless="${last}"
+							th:href="@{/user/community_detail?page={page}(page = ${next})}">次へ</a>
+					</div>
+				</div>
+			</th:block>
+		</div>
+	</div>
+	<!--/* サイドバークローズ */-->
+	<div th:replace="layout/myPageLayout :: sidebar-close"></div>
+
+	<!--/* footer */-->
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+	<script>
+		var infScroll = new InfiniteScroll('#commu-scroll', { // 記事を挿入していく要素を指定
+			append : '.cource-message-area', // 各記事の要素
+			path : '.commu-pagenation a', // 次のページへのリンク要素を指定
+			hideNav : '.commu-pagenation', // 指定要素を非表示にする（ここは無くてもOK）
+			button : '.view-more', // 記事を読み込むトリガーとなる要素を指定
+			scrollThreshold : 80, // スクロールで読み込む：falseで機能停止（デフォルトはtrue）
+			history : 'false', // falseで履歴に残さない
+			bufferPx : 30// 次コンテンツロードタイミング指定
+		});
+	</script>
+</body>
+
+</html>

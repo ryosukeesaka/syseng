@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head
+	th:replace="layout/baseLayout :: base-head('コース一覧', ~{::link}, ~{::script})">
+</head>
+<body>
+	<!--/*  navbar */-->
+	<div th:replace="layout/baseLayout :: navbar"></div>
+
+	<!--/* sidebar */-->
+	<div th:replace="layout/myPageLayout :: sidebar"></div>
+
+	<div class="container">
+		<div class="row index">
+			<div class="col-12">
+				<div class="logo1 text-center index-cource">
+					<h4>私たちと一緒に学びましょう</h4>
+				</div>
+			</div>
+			<!--/* <div class="card">
+			<div class="card-header">Featured</div>
+			<div class="card-body">
+				<h5 class="card-title">Special title treatment</h5>
+				<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+				<a href="#" class="btn btn-primary" id="nav2">Go somewhere</a>
+			</div>
+		    </div> */-->
+			<th:block th:each="obj:${courceList}">
+				<div class="col-6 col-lg-4">
+					<a th:href="@{/user/cource_{url}(url = ${obj.url})}" class="nav6">
+						<h4 class="font-weight-bold" th:text="${obj.courceName}"></h4>
+						<p th:text="${obj.courceDescription}"></p>
+					</a>
+				</div>
+			</th:block>
+
+		</div>
+	</div>
+	<div th:replace="layout/myPageLayout :: sidebar-close"></div>
+	<!--/* footer */-->
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+</body>
+</html>

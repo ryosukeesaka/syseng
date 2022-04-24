@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org">
+<!--/* headの引き継ぎ部分 */-->
+<head
+	th:replace="layout/baseLayout :: base-head('コミュニティメンバー', ~{::link}, ~{::script})">
+</head>
+<!--/* headの引き継ぎ部分 ここまで */-->
+<body>
+	<!--/*  navbar */-->
+	<div th:replace="layout/baseLayout :: navbar"></div>
+
+	<!--/* sidebar */-->
+	<div th:replace="layout/myPageLayout :: sidebar"></div>
+
+	<!--/* コミュニティ詳細 */-->
+	<div class="container">
+		<div class="my-sm-3">
+			<div class="row">
+				<div class="heading-icon">
+					<h5>
+						<img class="mb-2" th:src="@{/image/genjiko_icon/s_10_01.png}">
+						<th:block th:text="${community.communityName}"></th:block>
+						：メンバー (
+						<th:block th:if="${#arrays.contains(community.users,loginUser)}"
+							th:text="${#lists.size(memberCount)}+1"></th:block>
+						<th:block
+							th:unless="${#arrays.contains(community.users,loginUser)}"
+							th:text="${#lists.size(memberCount)}"></th:block>
+						人)
+					</h5>
+				</div>
+				<!-- /* コミュニティーに参加しているログインユーザー*/-->
+				<th:block th:if="${#arrays.contains(community.users,loginUser)}">
+					<div class="community follow">
+						<!--/* aタグをth:blockの外で閉じているのでエラーが出ています */-->
+						<a th:href="@{/user/mypage/profile}">
+							<div class="follow-list alert" role="alert">
+								<div>
+									<th:block th:switch="${loginUser.userDetail.imgPath}">
+										<img th:case="null" th:src="@{/image/noimg.png}"
+											class="profile icon">
+										<img th:case="''" th:src="@{/image/noimg.png}"
+											class="profile icon">
+										<img th:case="*"
+											th:src="@{/image/upload/{imgPath}(imgPath=${loginUser.userDetail.imgPath})}"
+											class="profile icon">
+									</th:block>
+								</div>
+								<div class="follow user">
+									<div>
+										<div>
+											<th:block th:text="'@'+${loginUser.username}" />
+										</div>
+										<div>
+											<th:block th:switch="${loginUser.userDetail.userDisplayName}">
+												<th:block th:case="null" th:text="'　'" />
+												<th:block th:case="''" th:text="'　'" />
+												<th:block th:case="*"
+													th:text="${loginUser.userDetail.userDisplayName}" />
+											</th:block>
+										</div>
+										<div>
+											<th:block
+												th:switch="${loginUser.userDetail.userShortDescription}">
+												<th:block th:case="null" th:text="'　'" />
+												<th:block th:case="''" th:text="'　'" />
+												<th:block th:case="*"
+													th:text="${loginUser.userDetail.userShortDescription}" />
+											</th:block>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</div>
+				</th:block>
+				<!-- /* コミュニティーユーザー一覧*/-->
+				<div class="community follow" id="commu-scroll">
+					<div class="commu-member-wrap">
+						<th:block th:each="userlist:${userList}">
+							<!--/* aタグをth:blockの外で閉じているのでエラーが出ています */-->
+							<a
+								th:href="@{/user/yourpage/other_profile?userId={userId}(userId=${userlist.userId})}">
+								<div class="follow-list alert" role="alert">
+									<div>
+										<th:block th:switch="${userlist.userDetail.imgPath}">
+											<img th:case="null" th:src="@{/image/noimg.png}"
+												class="profile icon">
+											<img th:case="''" th:src="@{/image/noimg.png}"
+												class="profile icon">
+											<img th:case="*"
+												th:src="@{/image/upload/{imgPath}(imgPath=${userlist.userDetail.imgPath})}"
+												class="profile icon">
+										</th:block>
+									</div>
+									<div class="follow user">
+										<div>
+											<div>
+												<th:block th:text="'@'+${userlist.username}" />
+											</div>
+											<div>
+												<th:block th:switch="${userlist.userDetail.userDisplayName}">
+													<th:block th:case="null" th:text="'　'" />
+													<th:block th:case="''" th:text="'　'" />
+													<th:block th:case="*"
+														th:text="${userlist.userDetail.userDisplayName}" />
+												</th:block>
+											</div>
+											<div>
+												<th:block
+													th:switch="${userlist.userDetail.userShortDescription}">
+													<th:block th:case="null" th:text="'　'" />
+													<th:block th:case="''" th:text="'　'" />
+													<th:block th:case="*"
+														th:text="${userlist.userDetail.userShortDescription}" />
+												</th:block>
+											</div>
+										</div>
+										<div class="follow-button">
+											<form th:action="@{/user/community_detail/member_list}"
+												th:object="${followFollowerForm}" method="post">
+												<th:block th:unless="${userlist==loginUser}">
+													<input type="hidden" th:value="${userlist.userId}"
+														name="userId">
+													<input type="hidden" th:value="${community.communityId}"
+														name="communityId">
+													<th:block th:if="${#arrays.contains(following,userlist)}">
+														<button type="submit" name="unfollow"
+															class="btn4 btn mr-1 mt-1">フォローを外す</button>
+													</th:block>
+													<th:block
+														th:unless="${#arrays.contains(following,userlist)}">
+														<button type="submit" name="follow"
+															class="btn1 btn mr-1 mt-1">フォローする</button>
+													</th:block>
+												</th:block>
+											</form>
+										</div>
+									</div>
+								</div>
+							</a>
+						</th:block>
+					</div>
+					<div class="commu-pagenation">
+						<a th:unless="${last}"
+							th:href="@{/user/community_detail/member_list?communityId={communityId}&page={page}(communityId=${communityId}, page = ${next})}">次へ</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="layout/myPageLayout :: sidebar-close"></div>
+	<!--/* footer */-->
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+	<script>
+		var infScroll = new InfiniteScroll('#commu-scroll', { // 記事を挿入していく要素を指定
+			append : '.commu-member-wrap', // 各記事の要素
+			path : '.commu-pagenation a', // 次のページへのリンク要素を指定
+			hideNav : '.commu-pagenation', // 指定要素を非表示にする（ここは無くてもOK）
+			button : '.view-more', // 記事を読み込むトリガーとなる要素を指定
+			scrollThreshold : 80, // スクロールで読み込む：falseで機能停止（デフォルトはtrue）
+			history : 'false', // falseで履歴に残さない
+			bufferPx : 30 // 次コンテンツロードタイミング指定
+		});
+	</script>
+</body>
+
+</html>

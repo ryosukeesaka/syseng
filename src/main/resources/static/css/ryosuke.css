@@ -1,0 +1,317 @@
+/*--------------------------------------------------------------
+# courceDetail
+--------------------------------------------------------------*/
+.courcedetail.detailname {
+	padding: 10px;
+	margin: 30px;
+	display: block;
+	font-weight: bold;
+	color: #CCCCCC;
+	border: solid 3px #CCCCCC;
+	border-radius: 10px;
+	width: 800px;
+}
+
+.courcedetail.title {
+	padding: 10px 0 10px 0;
+	margin: 30px 0 0 30px;
+	display: block;
+	font-weight: bold;
+	color: white;
+	border: solid 3px #CCCCCC;
+	border-radius: 10px;
+	background: #CCCCCC;
+	width: 800px;
+	text-align: center;
+}
+
+/*--------------------------------------------------------------
+# index
+--------------------------------------------------------------*/
+.index.title {
+	margin: 20px 0 0 0;
+	padding: 10px 0 5px 0;
+	font-weight: bold;
+	color: white;
+	background: #CCCCCC;
+	border-radius: 10px;
+	width: 720px;
+	display: block;
+	text-align: center;
+	font-size: 10px;
+}
+
+.cource.name {
+	padding: 55px 35px 55px 35px;
+	margin: 20px;
+}
+
+.cource.wrapper {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.cource.wrapper a {
+	text-decoration: none;
+}
+
+/*--------------------------------------------------------------
+# courceItem
+--------------------------------------------------------------*/
+.courceitem.title {
+	margin: 30px 0 0 0;
+	color: #AAAAAA;
+}
+
+.courceitem.name {
+	font-weight: bold;
+	color: white;
+	background: #CCCCCC;
+	border: solid 3px #CCCCCC;
+	border-radius: 100px;
+	width: 150px;
+	height: 150px;
+	text-align: center;
+	padding: 55px 0 50px 0;
+	margin: 10px;
+}
+
+/*--------------------------------------------------------------
+# communityList
+--------------------------------------------------------------*/
+.community.wrapper {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.community.subtitle {
+	font-size: 2px;
+}
+
+.community.list {
+	font-weight: bold;
+	color: white;
+	background: #CCCCCC;
+	border: solid 3px #CCCCCC;
+	border-radius: 30px;
+	width: 150px;
+	height: 150px;
+	text-align: center;
+	padding: 55px 0 50px 0;
+	margin: 10px;
+}
+
+.community.list a {
+	text-decoration: none;
+	color: white;
+}
+
+/*--------------------------------------------------------------
+# communityDetail
+--------------------------------------------------------------*/
+.community.messagelist {
+	background: #F5F5F5;
+	margin-bottom: 20px;
+	padding: 20px;
+	font-size: 13px;
+}
+
+.community.comment-tag {
+	width: 100%;
+	height: 50px;
+	color: white;
+	text-align: center;
+	padding-top: 13px;
+}
+
+.community.messagebody {
+	margin-right: 60px;
+	padding-top: 5px;
+	font-size: 12px;
+	display: flex;
+}
+
+.community.messagelist ul {
+	list-style: none;
+}
+
+.community.messagelist li {
+	border-bottom: 1px solid #D3D3D3;
+}
+
+@media ( max-width :575px) {
+	.community.messagelist img, .cource-message-area img, .learning.reply img {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		object-fit: cover;
+		float: left;
+		margin-right: 10px;
+	}
+	#commu-scroll {
+		padding: 0;
+	}
+	.community.comment-tag {
+	height: 30px;
+	padding-top: 5px;
+}
+}
+
+@media ( min-width :575px) {
+	.community.messagelist img, .cource-message-area img, .learning.reply img {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		object-fit: cover;
+		float: left;
+		margin-right: 20px;
+	}
+}
+
+.cource-message-area img:hover {
+	cursor: pointer;
+	opacity: 0.6;
+	transition-duration: 0.3s;
+}
+
+.list-group-item a {
+	text-decoration: none;
+	color: #002247;
+}
+
+.community.description {
+	color: #CCCCCC;
+	margin-top: 25px;
+}
+
+.community.messagebox {
+	width: 100%;
+}
+
+.community.submit-btn {
+	border-radius: 5%;
+	cursor: pointer;
+	background: #D3D3D3;
+	color: rgba(153, 153, 153, 0.75);
+	line-height: 1em;
+	font-size: 15px;
+	width: 18%;
+	margin-left: 5px;
+	border: 2px solid rgba(237, 237, 237, 0.98);
+}
+
+.community.submit-btn:hover {
+	background: #F5F5F5;
+}
+
+.community.member-btn {
+	margin-top: 20px;
+	background: #F5F5F5;
+	border-radius: 5%;
+	font-size: 13px;
+	padding: 10px;
+}
+
+.community.join-btn {
+	background-color: #EFEDE4;
+	color: #002247;
+	border-radius: .40rem;
+	padding: 0.4rem 0.8rem;
+}
+
+.community.join-btn:hover {
+	background-color: #F5F5F5;
+}
+
+.community.withdrawal-btn {
+	padding: 5px;
+	background-color: #EFEDE4;
+	color: #002247;
+	border-radius: .40rem;
+	padding: 0.4rem 0.8rem;
+	margin-top: 15px;
+}
+
+.community.withdrawal-btn:hover {
+	background-color: #FFE4E1;
+}
+
+.community.username {
+	text-align: left;
+	margin-top: 5px;
+}
+
+.community.cereated-at {
+	text-align: right;
+}
+
+.d-flex.justify-content-around a {
+	color: slategray;
+	text-decoration: none;
+}
+
+.community.reply-btn {
+	border-radius: 5%;
+	cursor: pointer;
+	background: #D3D3D3;
+	color: rgba(153, 153, 153, 0.75);
+	line-height: 1em;
+	font-size: 15px;
+	width: 18%;
+	margin-left: 5px;
+	border: 2px solid rgba(237, 237, 237, 0.98);
+}
+
+.community.reply-btn:hover {
+	background: #F5F5F5
+}
+
+.community.accbox label {
+	padding: 7px 8px;
+	background: #D3D3D3;
+	color: rgba(153, 153, 153, 0.75);
+	margin-left: 83%;
+}
+
+.community.accbox label:hover {
+	background-color: #F5F5F5;
+}
+
+.community.accbox .cssacc {
+	display: none;
+}
+
+.community.form-control {
+	height: 30px;
+}
+
+.community.accbox .accshow {
+	height: 0;
+	padding: 0;
+	overflow: hidden;
+	opacity: 0;
+	transition: 0.8s;
+}
+
+.cssacc:checked+.community.accshow {
+	height: auto;
+	padding: 5px;
+	background: #eaeaea;
+	opacity: 1;
+}
+
+.community.reply-list {
+	margin-left: 30px;
+}
+/*--------------------------------------------------------------
+# communityDetailMenber
+--------------------------------------------------------------*/
+
+.community.follow {
+	width: 100%;
+}
+
+.community.follow a {
+	color: #002247;
+	text-decoration: none;
+}

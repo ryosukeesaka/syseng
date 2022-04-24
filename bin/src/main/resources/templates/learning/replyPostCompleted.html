@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<!--/* headの引き継ぎ部分 */-->
+<head th:replace="layout/baseLayout :: base-head('レッスン - メッセージ送信完了', ~{::link}, ~{::script})">
+<script type="text/javascript">
+window.onload = function(){
+	window.opener.location.reload();
+	window.close();
+	}
+</script>
+</head>
+<!--/* headの引き継ぎ部分 ここまで */-->
+<body>
+
+</body>
+
+</html>

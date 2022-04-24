@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://wwwthymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="layout/baseLayout :: base-head('アカウント登録', ~{::link}, ~{::script})">
+</head>
+<body>
+	<div th:replace="layout/baseLayout :: navbar"></div>
+	<div class="container" style="max-width: 760px;">
+		<div class="heading-icon">
+			<h2 class="mb-3 mt-4 font-weight-normal">
+				<img class="mb-2 mr-2" th:src="@{image/genjiko_icon/s_10_03.png}" />新規登録
+			</h2>
+		</div>
+		<form class="login form-signin" action="#" th:action="@{/signup}" th:object="${signupForm}" method="post">
+			<p th:if="${signupError}">
+				<em>ユーザーネームかメールアドレスがすでに登録されています</em>
+			</p>
+
+			<input class="form-control mt-3" placeholder="ユーザーネーム" type="text" name="username" autofocus="autofocus" />
+			<p th:errors="*{username}" class="error-message"></p>
+
+			<input class="form-control mt-3" placeholder="パスワード" type="password" name="password" />
+			<p th:errors="*{password}" class="error-message"></p>
+
+			<input class="form-control mt-3" placeholder="パスワード確認(仮)" type="password" name="checkpassword" />
+			<p th:if="${passwordError}">
+				<em>パスワードとパスワード確認が同一ではありません。確認してください。</em>
+			</p>
+
+			<input class="form-control mt-3" placeholder="メールアドレス" type="email" name="mailAddress" />
+			<p th:errors="*{mailAddress}" class="error-message"></p>
+
+			<input type="submit" class="btn btn-lg btn-info btn-block mt-3 nav3" value="登　録" />
+			<a th:href="@{/login}">ログインはこちら</a>
+			<br>
+
+			<a th:href="@{/}">トップへ戻る</a>
+		</form>
+	</div>
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+</body>
+</html>

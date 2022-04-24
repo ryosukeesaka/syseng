@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:fragment="base-head(title, links, scripts)">
+<title
+	th:text="${title == null}? 'No title' : 'しすてむえんじに庵 - ' + ${title}">title</title>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+
+<link th:href="@{/image/favicon.png}" rel="icon">
+<link th:href="@{/image/apple-touch-icon.png}" rel="apple-touch-icon">
+
+<link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/css/bootstrap-grid.css}" rel="stylesheet"
+	type="text/css">
+<link th:href="@{/css/bootstrap-reboot.css}" rel="stylesheet"
+	type="text/css">
+<link th:href="@{/css/aos.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/css/slick.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/css/slick-theme.css}" rel="stylesheet" type="text/css">
+
+<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+<!--/* google-font import */-->
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700&display=swap"
+	rel="stylesheet">
+
+<!--/* 最後にstyle.cssに合流させる */-->
+<link th:href="@{/css/ryosuke.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/css/loginStyle.css}" rel="stylesheet" type="text/css">
+<!--/* 最後にstyle.cssに合流させる　ここまで */-->
+
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+
+<!--/* jQuery */-->
+<script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/js/infinite-scroll.pkgd.min.js}"></script>
+<th:block th:replace="${links} ?: _" />
+<th:block th:replace="${scripts} ?: _" />
+</head>
+<body>
+	<!--/* navbar */-->
+	<th:block th:fragment="navbar">
+		<div class="fixed-top">
+			<nav class="navbar navbar-expand-md navbar-light"
+				style="background-color: #002247;" id="header">
+				<th:block sec:authorize="isAuthenticated()">
+					<a class="navbar-brand" th:href="@{/user/mypage/profile}"><img
+						th:src="@{/image/title_concept5-1.png}" height="40"
+						class="d-inline-block align-top nav-img" alt=""></a>
+				</th:block>
+				<th:block sec:authorize="isAnonymous()">
+					<a class="navbar-brand" th:href="@{/}"><img
+						th:src="@{/image/title_concept5-1.png}" height="40"
+						class="d-inline-block align-top nav-img" alt=""></a>
+				</th:block>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarNav" aria-controls="navbarNav"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon" id="toggle-btn"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav mr-auto">
+					</ul>
+
+					<ul class="navbar-nav d-none d-md-flex">
+						<li class="nav-item active"><a class="nav1 btn mr-1 ml-1"
+							th:href="@{/user/community_detail}">コミュニティ一覧 <span class="sr-only"></span></a></li>
+						<li class="nav-item"><a class="nav1 btn mr-1 ml-1"
+							th:href="@{/user}">コース一覧</a></li>
+						<li class="nav-item"><th:block
+								sec:authorize="isAuthenticated()">
+								<a class="nav1 btn mr-1 ml-1" th:href="@{/user/mypage/profile}"><b>マイページ</b></a>
+							</th:block> <th:block sec:authorize="isAnonymous()">
+								<a class="nav1 btn mr-1 ml-1" th:href="@{/login}">ログイン</a>
+							</th:block></li>
+					</ul>
+
+					<ul class="navbar-nav d-md-none">
+						<li class="nav-item active"><a class="nav1 btn mr-1 ml-1"
+							th:href="@{/user/community_detail}">コミュニティ一覧 <span class="sr-only"></span></a></li>
+						<li class="nav-item"><a class="nav1 btn mr-1 ml-1"
+							th:href="@{/user}">コース一覧</a></li>
+						<li class="nav-item"><th:block
+								sec:authorize="isAuthenticated()">
+								<a class="nav1 btn mr-1 ml-1" th:href="@{/user/mypage/profile}"><b>マイページ</b></a>
+							</th:block> <th:block sec:authorize="isAnonymous()">
+								<a class="nav1 btn mr-1 ml-1" th:href="@{/login}">ログイン</a>
+							</th:block></li>
+						<th:block sec:authorize="isAuthenticated()">
+							<li><hr style="background-color: #fff;"></li>
+							<li><a class="nav1 btn" th:href="@{/user/mypage/profile}">プロフィール</a></li>
+							<!-- <li><a class="nav1 btn" th:href="@{/#}">学習中</a></li> -->
+							<!-- <li><a class="nav1 btn" th:href="@{/#}">修了証</a></li> -->
+							<!-- <li><a class="nav1 btn" th:href="@{/#}">取得済みステッカー</a></li> -->
+							<li><a class="nav1 btn" th:href="@{/user/mypage/follow}">フォロー</a></li>
+							<li><a class="nav1 btn" th:href="@{/user/mypage/follower}">フォロワー</a></li>
+							<li><a class="nav1 btn"
+								th:href="@{/user/mypage/direct_message?recieverUserId=0}">ダイレクトメッセージ</a></li>
+							<li><a class="nav1 btn" th:href="@{/user/community_detail}">参加コミュニティ</a></li>
+							<!-- <li><a class="nav1 btn" th:href="@{/#}">ランキング</a></li> -->
+							<li>
+								<form th:action="@{/logout}" method="post">
+									<button class="logout btn" type="submit">ログアウト</button>
+								</form>
+							</li>
+						</th:block>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</th:block>
+	<!--/* ココまで navbar */-->
+
+	<!--/* footer */-->
+	<th:block th:fragment="footer">
+		<footer id="footer">
+			<div class="footer-top">
+				<div class="container">
+					<div class="row">
+
+						<!-- <div class="col-4 col-sm-3">
+							<ul class="footerlist">
+								<li><a th:href="@{/#}">メニュー</a></li>
+								<li><a th:href="@{/#}">メニュー</a></li>
+								<li><a th:href="@{/#}">メニュー</a></li>
+								<li><a th:href="@{/#}">メニュー</a></li>
+								<li><a th:href="@{/#}">メニュー</a></li>
+								<li><a th:href="@{/#}">メニュー</a></li>
+							</ul>
+						</div>
+						<div class="col-4 col-sm-3">
+
+							<ul class="footerlist">
+								<li><a th:href="@{/#}">menu</a></li>
+								<li><a th:href="@{/#}">menu</a></li>
+								<li><a th:href="@{/#}">menu</a></li>
+								<li><a th:href="@{/#}">menu</a></li>
+								<li><a th:href="@{/#}">menu</a></li>
+								<li><a th:href="@{/#}">menu</a></li>
+							</ul>
+						</div>
+						<div class="d-none d-sm-block col-sm-3"></div>
+						<div class="col-4 col-sm-3">
+							<a class="btn btn2 footermenu mt-2">メニュー</a>
+							<br>
+							<a class="btn btn2 footermenu mt-2">メニュー</a>
+							<br>
+							<a class="btn btn2 footermenu mt-2">メニュー</a>
+							<br>
+						</div> -->
+
+					</div>
+				</div>
+			</div>
+
+			<div class="container">
+				<div class="copyright">
+					&copy; Copyright <strong><span><a
+							href="https://www.design-knot.com/" target="_blank"
+							rel="noopener noreferrer">Design Knot inc</a></span></strong>. All Rights
+					Reserved
+				</div>
+			</div>
+		</footer>
+	</th:block>
+	<!--/* ココまで footer */-->
+
+	<!--/* Optional JavaScript */-->
+	<!--/* jQuery first, then Popper.js, then Bootstrap JS */-->
+	<th:block th:fragment="menu-script">
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+			integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+			integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+			integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+			crossorigin="anonymous"></script>
+		<!--/* aos */-->
+		<script type="text/javascript" th:src="@{/js/aos.js}"></script>
+		<script type="text/javascript" th:src="@{/js/slick.js}"></script>
+		<script>
+			AOS.init({
+				once : true
+			});
+		</script>
+		<!--/* main.js */-->
+		<script th:src="@{/js/main.js}"></script>
+	</th:block>
+</body>
+</html>

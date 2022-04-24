@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<!--/* headの引き継ぎ部分 */-->
+<head th:replace="layout/baseLayout :: base-head('レッスン - メッセージ', ~{::link}, ~{::script})">
+<script type="text/javascript">
+
+</script>
+</head>
+<!--/* headの引き継ぎ部分 ここまで */-->
+<body>
+
+    <div class="container">
+        <div class="row">
+            <p th:text="${courceMessage.messageBody}"></p>
+            <form th:action="@{/user/courceReplyPost}" th:object="${courceReplyForm}" method="post" name="courceReplyPostForm" autocomplete="off">
+                <input type="hidden" name="courceMessageId" th:value="${courceMessage.messageId}">
+                <input type="text" name="courceReply">
+                <button type="submit" name="courceReplyPost" onclick="formPost();">送信</button>
+
+            </form>
+          </div>
+    </div>
+
+
+</body>
+
+</html>

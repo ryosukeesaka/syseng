@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head
+	th:replace="layout/baseLayout :: base-head('ログイン', ~{::link}, ~{::script})">
+</head>
+<body>
+	<th:block th:fragment="sidebar">
+		<div class="container-fluid mypage-height">
+			<div class="row">
+				<div class="col-xl-3 col-lg-4 col-md-5">
+					<nav class="d-none d-md-block navbar navbar-expand-md" id="sidebar">
+						<button class="navbar-toggler" type="button"
+							data-toggle="collapse" data-target="#responsiveMenu"
+							aria-controls="responsiveMenu" aria-expanded="false"
+							aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon" id="navbar-icon-side"></span>
+						</button>
+						<div class="collapse navbar-collapse" id="responsiveMenu">
+							<ul class="sidebar">
+								<li><a th:href="@{/user/mypage/profile}">プロフィール</a></li>
+								<!-- <li><a th:href="@{/#}">学習中</a></li> -->
+								<!-- <li><a th:href="@{/#}">修了証</a></li> -->
+								<!-- <li><a th:href="@{/#}">取得済みステッカー</a></li> -->
+								<li><hr></li>
+								<li><a th:href="@{/user/mypage/follow}">フォロー</a></li>
+								<li><a th:href="@{/user/mypage/follower}">フォロワー</a></li>
+								<li><a th:href="@{/user/mypage/direct_message?recieverUserId=0}">ダイレクトメッセージ</a></li>
+								<li><a th:href="@{/user/community_detail}">参加コミュニティ</a></li>
+								<!-- <li><a th:href="@{/#}">ランキング</a></li> -->
+								<li>
+									<form th:action="@{/logout}" method="post">
+										<button class="logout btn" type="submit">ログアウト</button>
+									</form>
+								</li>
+							</ul>
+						</div>
+					</nav>
+				</div>
+		<div class="col-xl-9 col-lg-8 col-md-7">
+	</th:block>
+
+	<th:block th:fragment="sidebar-close">
+		</div>
+		</div>
+		</div>
+	</th:block>
+
+</body>
+</html>
+

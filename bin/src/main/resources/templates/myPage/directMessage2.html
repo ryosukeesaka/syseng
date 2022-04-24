@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org">
+<!--/* headの引き継ぎ部分 */-->
+<head
+	th:replace="layout/baseLayout :: base-head('ダイレクトメッセージ', ~{::link}, ~{::script})">
+
+</head>
+<!--/* headの引き継ぎ部分 ここまで */-->
+<body>
+	<!--/* navbar引き継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: navbar"></div>
+	<!--/* navbar引き継ぎ部分 ここまで */-->
+
+	<!--/* sidebar引き継ぎ部分 */-->
+	<div th:replace="layout/myPageLayout :: sidebar"></div>
+	<!--/* sidebar引き継ぎ部分 ここまで */-->
+
+	<div class="direct-message">
+		<div class="row">
+			<!--/* やり取りをしたユーザー一覧 */-->
+			<div class="col-lg-5 d-none d-lg-block">
+				<p th:text="メッセージ履歴" class="m-4" />
+				<div style="height: 76vh; overflow-y: auto;">
+					<th:block th:each="obj:${userHistory}">
+						<a
+							th:href="@{/user/mypage/direct_message?recieverUserId={recieverUserId}
+							(recieverUserId=${obj.userId})}">
+							<!--/* divをaタグで囲っているためエラーが出ています */-->
+							<div class="direct-message archive">
+								<div>
+									<th:block th:switch="${obj.userDetail.imgPath}">
+										<img th:case="null" th:src="@{/image/noimg.png}">
+										<img th:case="''" th:src="@{/image/noimg.png}">
+										<img th:case="*"
+											th:src="@{/image/upload/{imgPath}(imgPath=${obj.userDetail.imgPath})}">
+									</th:block>
+								</div>
+								<div class="p-1">
+									<!--/* divをaタグで囲っているためエラーが出ています */-->
+									<div style="justify-content: space-between; display: flex;">
+										<div>
+											<div>
+												<th:block th:text="'@'+${obj.username}" />
+											</div>
+											<div>
+												<th:block th:text="${obj.userDetail.userDisplayName}" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</th:block>
+				</div>
+			</div>
+			<!--/* やり取りをしたユーザー一覧ここまで */-->
+
+			<!--/* メッセージ画面 */-->
+			<div class="col-12 col-lg-7">
+				<div class="direct-message message-body">
+					<div class="container">
+						<th:block th:unless="${selectedUser}">
+							<p th:text="${selectUser}" class="m-4" />
+						</th:block>
+						<!--/* ユーザー未選択の場合 */-->
+						<th:block th:unless="${selectedUser}">
+							<div class="direct-message unselected"
+								style="height: 76vh; overflow-y: auto;">
+								<th:block th:each="obj2:${following}">
+									<a
+										th:href="@{/user/mypage/direct_message?recieverUserId={recieverUserId}
+							(recieverUserId=${obj2.userId})}">
+										<!--/* divをaタグで囲っているためエラーが出ています */-->
+										<div class="direct-message followlist">
+											<div>
+												<th:block th:switch="${obj2.userDetail.imgPath}">
+													<img th:case="null" th:src="@{/image/noimg.png}">
+													<img th:case="''" th:src="@{/image/noimg.png}">
+													<img th:case="*"
+														th:src="@{/image/upload/{imgPath}(imgPath=${obj2.userDetail.imgPath})}">
+												</th:block>
+											</div>
+											<div class="p-1">
+												<!--/* divをaタグで囲っているためエラーが出ています */-->
+												<div style="justify-content: space-between; display: flex;">
+													<div>
+														<div>
+															<th:block th:text="'@'+${obj2.username}" />
+														</div>
+														<div>
+															<th:block th:text="${obj2.userDetail.userDisplayName}" />
+
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</th:block>
+							</div>
+						</th:block>
+						<!--/* ユーザー未選択ここまで */-->
+
+						<!--/* ユーザー選択済みの場合 */-->
+						<div class="selected">
+							<div class="row">
+								<th:block th:if="${selectedUser}">
+									<div
+										class="direct-message selected-user d-flex align-items-center px-3 py-2">
+										<div class="direct-message selected-img">
+											<a
+												th:href="@{/user/yourpage/other_profile?userId={userId}(userId=${recieverUserId})}">
+												<th:block th:switch="${recieverUser.userDetail.imgPath}">
+													<img th:case="null" th:src="@{/image/noimg.png}">
+													<img th:case="''" th:src="@{/image/noimg.png}">
+													<img th:case="*"
+														th:src="@{/image/upload/{imgPath}(imgPath=${recieverUser.userDetail.imgPath})}">
+												</th:block>
+											</a>
+										</div>
+										<div class="p-1">
+											<a
+												th:href="@{/user/yourpage/other_profile?userId={userId}(userId=${recieverUserId})}">
+												<!--/* divをaタグで囲っているためエラーが出ています */-->
+												<div style="justify-content: space-between; display: flex;">
+													<div>
+														<div>
+															<th:block th:text="'@'+${recieverUser.username}" />
+														</div>
+														<div>
+															<span style="font-weight: bold;"> <th:block
+																	th:text="${recieverUser.userDetail.userDisplayName}" />
+															</span>
+														</div>
+													</div>
+												</div>
+											</a>
+										</div>
+									</div>
+									<div class="container direct-message message scroll py-2 px-4"
+										id="dm-scroll">
+										<div id="scroll-inner" class="dm-body">
+										<div class="view-more"></div>
+											<th:block th:each="obj3:${directMessage}">
+												<th:block th:if="${obj3.senderUser}==${recieverUser}">
+													<div class="row">
+														<div class="col-11">
+															<div class="d-flex align-items-end">
+																<div class="mt-1 mr-2 direct-message selected-img">
+																	<a
+																		th:href="@{/user/yourpage/other_profile?userId={userId}(userId=${recieverUserId})}"><th:block
+																			th:switch="${recieverUser.userDetail.imgPath}">
+																			<img th:case="null" th:src="@{/image/noimg.png}">
+																			<img th:case="''" th:src="@{/image/noimg.png}">
+																			<img th:case="*"
+																				th:src="@{/image/upload/{imgPath}(imgPath=${recieverUser.userDetail.imgPath})}">
+																		</th:block> </a>
+																</div>
+																<div class="mt-1">
+																	<div class="direct-message reciever">
+																		<th:block th:if="${obj3.directMessageBody}==''">
+																			<div th:text="'　'"></div>
+																		</th:block>
+																		<th:block th:unless="${obj3.directMessageBody}==''">
+																			<div th:text="${obj3.directMessageBody}"></div>
+																		</th:block>
+																	</div>
+																	<div class="direct-message date-time">
+																		<th:block
+																			th:text="${#dates.format(obj3.createdAt, 'yyyy年MM月dd日 HH時mm分')}"></th:block>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-1"></div>
+													</div>
+												</th:block>
+												<th:block th:unless="${obj3.senderUser}==${recieverUser}">
+													<div class="row">
+														<div class="col-2"></div>
+														<div class="col-10">
+															<div class="mt-3 float-right">
+																<div class="direct-message sender">
+																	<th:block th:if="${obj3.directMessageBody}==''">
+																		<div th:text="'　'"></div>
+																	</th:block>
+																	<th:block th:unless="${obj3.directMessageBody}==''">
+																		<div th:text="${obj3.directMessageBody}"></div>
+																	</th:block>
+																</div>
+																<div class="text-right direct-message date-time">
+																	<th:block
+																		th:text="${#dates.format(obj3.createdAt, 'yyyy年MM月dd日 HH時mm分')}"></th:block>
+																</div>
+															</div>
+														</div>
+													</div>
+												</th:block>
+											</th:block>
+										</div>
+										<div class="dm-pagenation">
+											<a
+												th:href="@{/user/mypage/direct_message?recieverUserId={recieverUserId}&page={page}(recieverUserId=${recieverUserId},page = ${prev})}">前へ</a>
+										</div>
+									</div>
+								</th:block>
+							</div>
+							<th:block th:if="${msgBox}">
+								<div class="row">
+									<div class="direct-message msg-form px-1">
+										<form th:action="@{/user/mypage/direct_message}"
+											th:object="${directMessageForm}" autocomplete="off"
+											method="post">
+											<div class="direct-message send m-2 d-flex">
+												<input type="hidden" name="recieverUserId"
+													th:value="${recieverUserId}" />
+												<textarea name="directMessageBody"
+													placeholder="メッセージを入力してください" id="auto-height"
+													onkeyup="textLengthCountForDm(value,1000)"></textarea>
+												<button type="submit" name="sendMessage"
+													class="btn1 btn ml-2 d-trans" style="border: none;"
+													id="validated-btn" disabled>送信</button>
+											</div>
+											<div>
+												<p id="inputLength" />
+											</div>
+										</form>
+									</div>
+								</div>
+							</th:block>
+						</div>
+						<!--/* ユーザー選択済みの場合ここまで */-->
+					</div>
+				</div>
+			</div>
+			<!--/* メッセージ画面ここまで */-->
+		</div>
+	</div>
+
+	<!--/* サイドメニュークローズ引継ぎ部分 */-->
+	<div th:replace="layout/myPageLayout :: sidebar-close"></div>
+	<!--/* サイドメニュークローズ引き継ぎ部分 ここまで */-->
+
+	<!--/* footer引き継ぎ部分 */-->
+	<div th:replace="layout/myPageLayout :: sidebar-close"></div>
+	<!--/* footer引き継ぎ部分 ここまで */-->
+
+	<!--/* footer引き継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<!--/* footer引き継ぎ部分 ここまで */-->
+
+	<!--/* menuscript引き継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+	<!--/* menuscript引き継ぎ部分 ここまで */-->
+	<script>
+		var infScroll = new InfiniteScroll( '#dm-scroll', { // 記事を挿入していく要素を指定
+		    append: '.dm-body',             // 各記事の要素
+		    path: '.dm-pagenation a',  // 次のページへのリンク要素を指定
+		    hideNav: '.sdm-pagenation', // 指定要素を非表示にする（ここは無くてもOK）
+		    button: '.view-more', // 記事を読み込むトリガーとなる要素を指定
+		    scrollThreshold: 400,      // スクロールで読み込む：falseで機能停止（デフォルトはtrue）
+		    status: '.page-load-status', // ステータス部分の要素を指定
+		    history: 'false'             // falseで履歴に残さない
+		});
+	</script>
+</body>
+</html>

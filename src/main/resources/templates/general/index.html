@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://wwwthymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head
+	th:replace="layout/baseLayout :: base-head('より業務よりで実践的な講義を学び「現場で実践できる」技術を学ぼう', ~{::link}, ~{::script})">
+<!--/* style.cssに最後に合流させる。 */-->
+<link th:href="@{/css/index.css}" rel="stylesheet" type="text/css">
+<!--/* style.cssに最後に合流させる。 ここまで */-->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+	integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+	crossorigin="anonymous">
+</head>
+
+<body>
+	<div th:replace="layout/baseLayout :: navbar"></div>
+	<main>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="index index-helo" style="margin-top: -4px;">
+					<img th:src="@{/image/topindex6.jpg}" style="width: 100%;">
+					<div class="d-flex justify-content-end">
+						<div class="index group col-7 col-sm-6 col-xl-5">
+							<div class="index logo">
+								<img class="mx-auto d-block" th:src="@{/image/title2.png}">
+							</div>
+							<div class="index top-form mx-auto">
+								<div class="index top-form-inner">
+									<form>
+										<div class="mt-2 mt-sm-3 mt-lg-5 text-center">
+											<a th:href="@{/signup}" class="btn3 btn-block index py-xl-3">今すぐ登録</a>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container introduction">
+			<div class="row py-4 py-sm-5">
+				<div class="col-12">
+					<h4>より業務よりで実践的な講義</h4>
+				</div>
+				<div class="col-8 col-lg-6">
+					<p class="mt-sm-2 mt-xl-4">初心者の方はもちろんのことながら、より実践的な応用の効く講義内容で
+						「実際の仕事現場にて実用できる」を目標としたカリキュラムが魅力です。
+						初学者からもう一段ステップアップしたいプロまで幅広くご利用いただけます。</p>
+					<button class="btn1 btn-block index mt-3 mt-xl-5">詳しくはこちら</button>
+				</div>
+				<div
+					class="col-4 col-lg-6 d-flex align-items-start align-items-sm-center px-2">
+					<img th:src="@{/image/study_note.png}" class="mx-auto d-block">
+				</div>
+			</div>
+			<div class="row py-4 py-sm-5">
+				<div class="col-12 d-flex justify-content-end">
+					<h4>短いスライドでスキマ時間を有効活用</h4>
+				</div>
+				<div
+					class="col-4 col-lg-6 d-flex align-items-start align-items-sm-center px-2">
+					<img th:src="@{/image/pc.png}" class="mx-auto d-block">
+				</div>
+				<div class="col-8 col-lg-6">
+					<p class="mt-sm-2 mt-xl-4"></p>
+					<button class="btn1 btn-block index mt-3 mt-xl-5">詳しくはこちら</button>
+				</div>
+			</div>
+			<div class="row py-4 py-sm-5">
+				<div class="col-12">
+					<h4>多様な言語に対応した豊富なコース</h4>
+				</div>
+				<div class="col-8 col-lg-6">
+					<p class="mt-sm-2 mt-xl-4"></p>
+					<button class="btn1 btn-block index mt-3 mt-xl-5">詳しくはこちら</button>
+				</div>
+				<div
+					class="col-4 col-lg-6 d-flex align-items-start align-items-sm-center px-2">
+					<img th:src="@{/image/folder.png}" class="mx-auto d-block">
+				</div>
+			</div>
+		</div>
+		<hr class="mt-5 mr-5 mb-5 ml-5">
+		<div class="container">
+			<div class="row mt-3">
+				<div class="col-md-3 col-sm-6">
+					<a th:href="@{/#}" class="contents-link">
+						<div class="index alert" role="alert">
+							<div class="d-flex flex-column">
+								Python <img th:src="@{/image/lang_icon/6.png}"
+									class="mx-auto d-block" style="width: 68px; height: 73px;">
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<p>！！コピペ！！ Pythonの用途は様々で、組み込み開発や、Webアプリケーション、 デスクトップアプリケーション、
+						さらには人工知能開発、ビッグデータ解析など、 少ないコードで簡潔にプログラムを書けること、
+						専門的なライブラリが豊富にあることなどが特徴です。</p>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<a th:href="@{/#}" class="contents-link">
+						<div class="index alert" role="alert">
+							<div class="d-flex flex-column">
+								JavaScript <img th:src="@{/image/lang_icon/4.png}"
+									class="mx-auto d-block" style="width: 68px; height: 73px;">
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<p>！！コピペ！！JavaScript はウェブページにて複雑な機能をできるようにするプログラミング言語です</p>
+				</div>
+			</div>
+			<hr>
+			<div class="row mt-3">
+				<div class="col-md-3 col-sm-6">
+					<p>Javaとは、1995年に米国のSun Microsystems（サン
+						マイクロシステムズ）社が開発したプログラミング言語です。
+						2010年にORACLE社に吸収合併され、その後はORACLE社がJavaを提供しています。</p>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<a th:href="@{#}" class="contents-link">
+						<div class="index alert" role="alert">
+							<div class="d-flex flex-column">
+								Java <img th:src="@{/image/lang_icon/5.png}"
+									class="mx-auto d-block" style="width: 68px; height: 73px;">
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<p>HTMLとは、Hyper Text Markup Language（ハイパーテキスト・マークアップ・ランゲージ）の略で、
+						Webページを作るための最も基本的なマークアップ言語のひとつです。</p>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<a th:href="@{/#}" class="contents-link">
+						<div class="index alert" role="alert">
+							<div class="d-flex flex-column">
+								HTML5 <img th:src="@{/image/lang_icon/2.png}"
+									class="mx-auto d-block" style="width: 68px; height: 73px;">
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<hr>
+			<div class="row mt-3">
+				<div class="col-md-3 col-sm-6">
+					<a th:href="@{/#}" class="contents-link">
+						<div class="index alert" role="alert">
+							<div class="d-flex flex-column">
+								ExcelVBA <img th:src="@{/image/lang_icon/7.png}"
+									class="mx-auto d-block" style="width: 68px; height: 73px;">
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<p>VBAとは、Microsoft Officeに含まれるアプリケーションソフトの拡張機能で、
+						利用者が簡易なプログラムを記述して実行することで複雑な処理の自動化などを行なうことができるもの。</p>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<a th:href="@{/#}" class="contents-link">
+						<div class="index alert" role="alert">
+							<div class="d-flex flex-column">
+								git <i class="fab fa-git"></i>
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<p>Gitは、プログラムのソースコードなどの変更履歴を記録・追跡するための分散型バージョン管理システムである。</p>
+				</div>
+			</div>
+			<hr>
+			<div class="row mt-3">
+				<div class="col-md-3 col-sm-6">
+					<p>CSS（Cascading Style Sheets、カスケーディング・スタイル・シート）とは、
+						ウェブページのスタイルを指定するための言語です。</p>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<a th:href="@{/#}" class="contents-link">
+						<div class="index alert" role="alert">
+							<div class="d-flex flex-column">
+								CSS3 <img th:src="@{/image/lang_icon/3.png}"
+									class="mx-auto d-block" style="width: 68px; height: 73px;">
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<p>PHPとは動的にWebページを生成することができるサーバーサイドのスクリプト言語です。</p>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<a th:href="@{/#}" class="contents-link">
+						<div class="index alert" role="alert">
+							<div class="d-flex flex-column">
+								PHP <img th:src="@{/image/lang_icon/1.png}"
+									class="mx-auto d-block" style="width: 68px; height: 73px;">
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<button class="btn1 btn-block index mt-5">詳しくはこちら</button>
+		</div>
+		<hr class="mt-5 mr-5 mb-5 ml-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					<a th:href="@{/#}" class="contents-link">
+						<div class="index alert" role="alert">
+							<div class="d-flex flex-column">
+								<h4>無料プラン</h4>
+								<p>基本的なコンテンツ、講師へのメール質問</p>
+								<i class="far fa-circle"></i>
+								<p style="font-size: 30px;">￥0</p>
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-sm-6">
+					<a th:href="@{/#}" class="contents-link">
+						<div class="index alert" style="background-color: #CCFFCC"
+							role="alert">
+							<div class="d-flex flex-column">
+								<h4>有料プラン</h4>
+								<p>すべてのコンテンツ、講師への直接質問</p>
+								<i class="far fa-circle"></i>
+								<p style="font-size: 30px;">￥000/月</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<a th:href="@{/#}"> 詳しく見る<i class="fas fa-external-link-alt"></i>
+			</a>
+		</div>
+		<hr class="mt-5 mr-5 mb-5 ml-5">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="text-center">
+						<div>
+							<h2>あなたも早速始めましょう</h2>
+							<p>新しい技術を習得し新しい自分を見つけに行きましょう</p>
+						</div>
+						<div class="w-50 mx-auto">
+							<a th:href="@{/#}" class="btn_signup index mt-2 mt-sm-3 mt-md-5">登録する</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+</body>
+</html>

@@ -1,0 +1,1041 @@
+@charset "UTF-8";
+
+body {
+	font-family: 'Noto Serif JP', serif;
+	color: #002247;
+	font-size: 15px;
+	min-height: 100vh;
+	position: relative;
+	padding-top: 4.3rem;
+	padding-bottom: 190px;
+	box-sizing: border-box;
+}
+
+@media ( max-width :575px) {
+	body {
+		padding-top: 3.5rem;
+		padding-bottom: 200px;
+		font-size: 12px;
+	}
+	h2 {
+		font-size: 18px;
+	}
+	h4 {
+		font-size: 16px;
+	}
+	h5 {
+		font-size: 15px;
+	}
+	button {
+		font-size: 12px;
+	}
+	a {
+		font-size: 12px;
+	}
+}
+
+/* btn1 ベージュ背景 紺文字 ボーダーなし → 紺背景 ベージュ文字 */
+.btn1 {
+	background-color: #EFEDE4;
+	color: #002247;
+	border-radius: .40rem;
+	padding: 0.4rem 0.8rem;
+	border: 1px solid transparent;
+}
+
+.btn1:hover {
+	background-color: #002247;
+	color: #EFEDE4;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+}
+
+.btn1:focus {
+	outline: 0;
+	background-color: #002247;
+	color: #EFEDE4;
+}
+
+.btn1:disabled {
+	opacity: 0.65;
+}
+
+/* btn2 紺背景 ベージュ文字 → ベージュ背景 紺文字 紺ボーダー */
+.btn2 {
+	background-color: #002247;
+	color: #EFEDE4;
+	border-radius: .40rem;
+	padding: 0.4rem 0.8rem;
+	border: 1px solid transparent;
+}
+
+.btn2:hover {
+	background-color: rgb(0, 43, 91, 0.8);
+	color: #fff;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+}
+
+.btn2:focus {
+	outline: 0;
+	background-color: rgb(0, 43, 91, 0.8);
+	color: #fff;
+}
+
+.btn2:disabled {
+	opacity: 0.65;
+}
+
+/* btn3 削除用ボタン */
+.btn3 {
+	background-color: #EFEDE4;
+	color: #B81428;
+	border-radius: .40rem;
+	padding: 0.4rem 0.8rem;
+	border: solid 1px #B81428;
+}
+
+.btn3:hover {
+	background-color: #B81428;
+	color: #EFEDE4;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+}
+
+.btn3:focus {
+	outline: 0;
+	background-color: #B81428;
+	color: #EFEDE4;
+}
+
+/* btn4 ベージュ背景 紺文字 →  赤背景 ベージュ文字  */
+.btn4 {
+	background-color: #EFEDE4;
+	color: #002247;
+	border-radius: .40rem;
+	padding: 0.4rem 0.8rem;
+	border: 1px solid transparent;
+}
+
+.btn4:hover {
+	background-color: #B81428;
+	color: #EFEDE4;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+}
+
+.btn4:focus {
+	outline: 0;
+	background-color: #B81428;
+	color: #EFEDE4;
+}
+
+/* btn5 背景なし 紺文字 ボーダーなし → 紺背景 ベージュ文字 */
+.btn5 {
+	color: #002247;
+	border-radius: .40rem;
+	padding: 0.4rem 0.8rem;
+	border: 1px solid transparent;
+}
+
+.btn5:hover {
+	background-color: #002247;
+	color: #EFEDE4;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+}
+
+.btn5:focus {
+	outline: 0;
+}
+
+.btn_signup {
+	background-color: #EFEDE4;
+	color: #002247;
+	border-radius: .40rem;
+	display: block;
+	padding: 0.8rem 0.8rem;
+	border: 1px solid transparent;
+}
+
+.btn_signup:hover {
+	background-color: #002247;
+	color: #EFEDE4;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+}
+
+.btn_signup:focus {
+	outline: 0;
+}
+
+@media ( max-width :575px) {
+	.btn1, .btn2, .btn3, .btn4, .btn5 {
+		padding: 3px 8px;
+	}
+}
+/* logo1 紺背景 ベージュ文字 */
+.logo1 {
+	background-color: #002247;
+	color: #EFEDE4;
+	border-radius: .40rem;
+	padding: 0.5rem 1rem;
+}
+
+/* logo2 紺背景 ベージュ文字 */
+.logo2 {
+	background-color: #EFEDE4;
+	color: #002247;
+	border-radius: .40rem;
+	padding: 0.5rem 1rem;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: #fff;
+	border-left: solid 1px #ececec;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #ccc;
+	border-radius: 10px;
+	box-shadow: inset 0 0 0 2px #fff;
+}
+
+.heading-icon {
+	padding-top: 5px;
+}
+
+@media ( min-width :576px) {
+	.heading-icon {
+		padding-top: 10px;
+	}
+}
+/*--------------------------------------------------------------
+# navbar
+--------------------------------------------------------------*/
+.navbar-toggler .navbar-toggler-icon {
+	background-image:
+		url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+/* nav1 紺背景 → ベージュ地 紺文字 ボーダーなし */
+.nav1 {
+	background-color: #002247;
+	color: #EFEDE4;
+	border-radius: .40rem;
+	display: block;
+	padding: 0.5rem 1rem;
+}
+
+.nav1:hover {
+	background-color: #EFEDE4;
+	color: #002247;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+}
+
+/* nav2 紺背景 → ベージュ地 紺文字 紺ボーダー */
+.nav2 {
+	background-color: #002247;
+	color: #EFEDE4;
+	border-radius: .40rem;
+	display: block;
+	padding: 0.5rem 1rem;
+	border: 1px solid transparent;
+}
+
+.nav2:hover {
+	background-color: #EFEDE4;
+	color: #002247;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+	border: solid 1px #002247;
+}
+
+.nav2:focus {
+	outline: 0;
+	background-color: #EFEDE4;
+	color: #002247;
+}
+
+.nav2:disabled {
+	opacity: 0.65;
+}
+
+/* nav3 白背景 紺文字 紺ボーダー → ベージュ地 赤文字 赤ボーダー */
+.nav3 {
+	background-color: #FFF;
+	color: #002247;
+	border-radius: .40rem;
+	display: block;
+	padding: 0.5rem 1rem;
+	border: solid 1px #002247;
+}
+
+.nav3:hover {
+	background-color: #EFEDE4;
+	color: #B81428;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+	border: solid 1px #B81428;
+}
+
+/* nav4 紺背景 → ベージュ地 赤文字 赤ボーダー */
+.nav4 {
+	background-color: #002247;
+	color: #EFEDE4;
+	border-radius: .40rem;
+	display: block;
+	padding: 0.5rem 1rem;
+	border: solid 1px #002247;
+}
+
+.nav4:hover {
+	background-color: #EFEDE4;
+	color: #B81428;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+	border: solid 1px #B81428;
+}
+
+.nav5 {
+	background-color: #FFF;
+	color: #002247;
+	border-radius: .40rem;
+	display: block;
+	padding: 0.5rem 1rem;
+	border: solid 1px #002247;
+}
+
+.nav5:hover {
+	background-color: #EFEDE4;
+	color: #002247;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+	border: solid 1px #002247;
+}
+
+/* nav6 コース一覧用 ベージュ背景 紺文字 ボーダーなし 高さあり → 紺ボーダー */
+.nav6 {
+	background-color: #EFEDE4;
+	color: #002247;
+	border-radius: .40rem;
+	display: block;
+	padding: 1.5rem 1rem;
+	text-align: center;
+	border: solid 1px #EFEDE4;
+}
+
+.nav6:hover {
+	color: #B81428;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+	border: solid 1px #B81428;
+}
+
+/* nav7 コンテンツ用 ベージュ背景 紺文字 ボーダーなし → 紺ボーダー */
+.nav7 {
+	background-color: #EFEDE4;
+	color: #002247;
+	border-radius: .40rem;
+	display: block;
+	padding: 0.5rem 1rem;
+	border: solid 1px #EFEDE4;
+}
+
+.nav7:hover {
+	color: #B81428;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+	border: solid 1px #B81428;
+}
+
+/* nav8 コンテンツ用 ベージュ背景 紺文字 ボーダーなし → 紺背景 ベージュ文字 */
+.nav8 {
+	background-color: #EFEDE4;
+	color: #002247;
+	border-radius: .40rem;
+	display: block;
+	border: 1px solid transparent;
+	padding: 0.5rem 1rem;
+}
+
+.nav8:hover {
+	background-color: #002247;
+	color: #EFEDE4;
+	text-decoration: none;
+	transition: all 0.5s 0s ease;
+}
+
+.nav8:focus {
+	outline: 0;
+}
+
+@media ( max-width :575px) {
+	#header a, #header button {
+		font-size: 12px;
+	}
+	.nav-img {
+		height: 30px;
+	}
+}
+/*--------------------------------------------------------------
+# footer
+--------------------------------------------------------------*/
+#footer {
+	margin-top: 10px;
+	background-color: #EFEDE4;
+}
+
+.footerlist {
+	list-style: none;
+	padding-left: 20px;
+}
+
+.footerlist a {
+	color: #002247;
+	text-decoration: none;
+}
+
+.copyright {
+	text-align: center;
+}
+
+.copyright a {
+	color: #002247;
+	text-decoration: none;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+@media ( max-width :575px) {
+	a.footermenu {
+		font-size: 12px;
+	}
+	#footer {
+		font-size: 12px;
+	}
+}
+
+/*--------------------------------------------------------------
+# sidemenu
+--------------------------------------------------------------*/
+#sidebar {
+	position: fixed;
+}
+
+.sidebar {
+	margin: 1rem auto;
+	list-style: none;
+	padding-inline-start: 0px;
+	text-align: center;
+}
+
+#navbar-icon-side {
+	background-image:
+		url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(169,169,169,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.logout {
+	display: block;
+	width: 100%;
+	background-color: #EFEDE4;
+	color: #002247;
+	border-radius: 0.4rem; /* 角丸       */
+	text-align: center; /* 文字位置   */
+	padding: 12px 55px; /* 余白       */
+	line-height: 1em; /* 1行の高さ  */
+	margin: 10px 0;
+}
+
+.logout:hover {
+	border: solid 1px #B81428;
+	transition: all 0.5s 0s ease;
+	color: #B81428;
+}
+
+.sidebar a {
+	display: inline-block;
+	text-decoration: none;
+	border-radius: 0.4rem; /* 角丸       */
+	text-align: center; /* 文字位置   */
+	padding: 12px 55px; /* 余白       */
+	color: #002247; /* 文字色     */
+	line-height: 1em; /* 1行の高さ  */
+	transition: all 0.5s 0s ease; /* なめらか変化 */
+}
+
+.sidebar a:hover {
+	text-decoration: none;
+	background-color: #EFEDE4;
+}
+
+.sidebar hr {
+	border-top: solid 1px #002247;
+}
+
+/*--------------------------------------------------------------
+# mypage 共通
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# profile,otherProfile,profileEdit(一部)共通
+--------------------------------------------------------------*/
+.profile {
+	margin: 0 auto;
+}
+
+.profile a {
+	color: #002247;
+}
+
+.profile img {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	object-fit: cover;
+	border-radius: 50%
+}
+
+.profile.user-edit textarea {
+	resize: none;
+	max-height: 80px;
+}
+
+@media ( max-width :576px) {
+	.profile-img, .icon-edit {
+		margin: 0 auto;
+		width: 80%;
+		margin-bottom: 0.5rem;
+	}
+	.user-display-name {
+		font-size: 15px;
+		font-weight: bold;
+	}
+	.profile.user-edit input, .profile.user-edit textarea {
+		font-size: 12px;
+	}
+	.profile img {
+		width: 70px;
+		height: 70px;
+	}
+}
+
+@media ( min-width :576px) {
+	.user-display-name {
+		font-size: 20px;
+		font-weight: bold;
+	}
+}
+
+@media ( min-width :576px) and (max-width:991px) {
+	.icon-edit {
+		margin: 0 auto;
+		max-width: 45%;
+		margin-bottom: 0.5rem;
+	}
+}
+
+@media ( min-width :768px) and (max-width:992px) {
+	.profile {
+		margin: 0 auto;
+	}
+	.profile-img {
+		margin: 0 auto;
+		max-width: 45%;
+		margin-bottom: 0.5rem;
+	}
+	.profile.user, .profile.other {
+		padding: 0.75rem;
+	}
+}
+
+@media ( min-width :992px) and (max-width:1199px) {
+	.profile.user, .profile.other {
+		margin: 2rem auto;
+		width: 90%;
+	}
+	.profile-img {
+		margin: 0 auto;
+		max-width: 50%;
+	}
+}
+
+@media ( min-width :1200px) {
+	.profile.user, .profile.other {
+		margin: 2rem auto;
+		width: 70%;
+	}
+}
+
+@media ( min-width :992px) {
+	.icon-edit {
+		margin: 0 auto;
+		max-width: 30%;
+		margin-bottom: 0.5rem;
+	}
+	.profile img {
+		width: 120px;
+		height: 120px;
+	}
+}
+
+/*--------------------------------------------------------------
+# profileEdit
+--------------------------------------------------------------*/
+.profile.user-edit {
+	margin: 2em auto;
+}
+
+@media ( min-width :992px) {
+	.profile.user-edit {
+		width: 80%;
+	}
+}
+
+@media ( min-width :1200px) {
+	.profile.user-edit div {
+		margin-bottom: 0.5rem;
+	}
+}
+
+.profile.icon-edit {
+	font-size: 12px;
+	text-align: center;
+}
+
+.profile.icon-edit label:hover {
+	cursor: pointer;
+	opacity: 0.6;
+	transition-duration: 0.3s;
+}
+
+.profile.user-edit input, .profile.user-edit textarea {
+	border-color: #EFEDE4;
+}
+
+#img-edit {
+	display: none;
+}
+
+/*--------------------------------------------------------------
+# follow,follower共通
+--------------------------------------------------------------*/
+.follow-list.alert, .follower-list.alert {
+	min-height: 8rem;
+	padding: 0.75rem;
+	border-color: #5B6275;
+	border-width: 1px;
+	border-radius: 0.8rem;
+}
+
+.mypage.follow a, .mypage.follower a, .yourpage.follow a, .yourpage.follower a
+	{
+	color: #002247;
+	text-decoration: none;
+}
+
+.follow-list.alert:hover, .follower-list.alert:hover {
+	background-color: #EFEDE4;
+	border-color: #EFEDE4;
+}
+
+.follow button, .follower button {
+	border-color: #5B6275;
+}
+
+.mypage.follow, .mypage.follower, .yourpage.follow, .yourpage.follower {
+	margin: 0 auto;
+	width: 100%;
+}
+
+@media ( max-width :575px) {
+	.follow-list.alert, .follower-list.alert {
+		min-height: 5rem;
+		padding: 0.5rem;
+	}
+	.follow, .follower {
+		font-size: 12px;
+	}
+	.follow button, .follower button, a.cource-text, button.cource-text {
+		font-size: 12px;
+		padding: 2px 5px;
+	}
+	.follow img, .follower img {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		object-fit: cover;
+		float: left;
+		margin: 0.3rem 1rem 0 0;
+	}
+	.follow-button {
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 5px;
+	}
+}
+
+@media ( min-width :576px) and ( max-width :991px) {
+	.follow img, .follower img {
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+		object-fit: cover;
+		float: left;
+		margin-right: 1rem;
+	}
+}
+
+@media ( min-width :992px) {
+	.follow img, .follower img {
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		object-fit: cover;
+		float: left;
+		margin-right: 1rem;
+	}
+}
+
+@media ( min-width :576px) and (max-width:768px) {
+	.follow button, .follower button, a.cource-text, button.cource-text {
+		font-size: 13px;
+		padding: 3px 7px;
+	}
+}
+
+@media ( min-width :769px) and (max-width:991px) {
+	.follow, .follower {
+		font-size: 13px;
+	}
+	.follow button, .follower button, a.cource-text, button.cource-text {
+		font-size: 12px;
+		padding: 3px 7px;
+	}
+}
+
+@media ( min-width :992px) {
+	.follow button, .follower button, a.cource-text, button.cource-text {
+		font-size: 13px;
+		padding: 3px 7px;
+	}
+}
+
+@media ( min-width :1200px) {
+	.follow.user, .follower.user {
+		justify-content: space-between;
+		display: flex;
+	}
+}
+
+@media ( min-width :576px) and ( max-width :1199px) {
+	.follow-button {
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 10px;
+	}
+}
+
+/*--------------------------------------------------------------
+# directMessage
+--------------------------------------------------------------*/
+@media ( max-width :575px) {
+	.direct-message {
+		font-size: 12px;
+	}
+}
+
+@media ( max-width :767px) {
+	.direct-message.message-body {
+		margin-right: -20px;
+		margin-left: -20px;
+	}
+}
+
+@media ( min-width :768px) {
+	.direct-message.message-body {
+		border-right: 1px solid #ececec;
+		border-left: 1px solid #ececec;
+	}
+}
+
+@media ( min-width :992px) and (max-width:1199px) {
+	.direct-message {
+		font-size: 13px;
+	}
+}
+
+/* ユーザー選択済み */
+.direct-message.selected-user {
+	width: 100%;
+	height: 100%;
+	border-bottom: 1px solid #ececec;
+}
+
+.direct-message img {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin: 5px;
+}
+
+.direct-message.selected-img img:hover {
+	cursor: pointer;
+	opacity: 0.6;
+	transition-duration: 0.3s;
+}
+
+.direct-message.sender, .direct-message.reciever {
+	position: relative;
+	padding: 0.4rem 0.8rem;
+	border: 1px solid transparent;
+	border-radius: 1rem;
+}
+
+.direct-message.reciever {
+	border-bottom-left-radius: 0px;
+	background-color: #EFEDE4;
+}
+
+.direct-message.sender {
+	border-bottom-right-radius: 0px;
+	background-color: #ffffff;
+	border-color: #5B6275;
+}
+
+@media ( max-width :575px) {
+	.direct-message img {
+		width: 40px;
+		height: 40px;
+	}
+	.direct-message.date-time {
+		font-size: 9px;
+	}
+}
+
+@media ( min-width :576px) {
+	.direct-message.date-time {
+		font-size: 11px;
+	}
+}
+
+@media ( max-width :1199px) {
+	.direct-message.selected-img img {
+		width: 40px;
+		height: 40px;
+	}
+	.direct-message.reciever, .direct-message.sender {
+		padding: 3px 9px;
+	}
+	.direct-message.date-time {
+		font-size: 9px;
+	}
+}
+
+@media ( max-width :575px) {
+	.direct-message.message {
+		height: 70vh;
+		overflow-y: auto;
+	}
+}
+
+@media ( min-width :576px) and ( max-width:1199px) {
+	.direct-message.message {
+		height: 68vh;
+		overflow-y: auto;
+	}
+}
+
+@media ( min-width :1200px) {
+	.direct-message.message {
+		height: 68vh;
+		overflow-y: auto;
+	}
+}
+
+.direct-message.select-message {
+	height: 85vh;
+	overflow-y: auto;
+}
+
+/* ユーザー未選択 */
+.direct-message.unselected, .direct-message.archive {
+	margin: 0 auto;
+	width: 100%;
+}
+
+.direct-message.unselected img, .direct-message.archive img {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	object-fit: cover;
+	float: left;
+	margin-right: 20px;
+}
+
+.direct-message.followlist, .direct-message.archive {
+	position: relative;
+	padding: 0.75rem 1.25rem;
+	border-color: #ececec;
+	border-top: 1px solid #ececec;
+	height: 5.25rem;
+}
+
+.direct-message a {
+	text-decoration: none;
+	color: #002247;
+}
+
+.direct-message.followlist:hover, .direct-message.archive:hover {
+	background-color: #EFEDE4;
+}
+
+/* 送信フォーム */
+.direct-message.msg-form {
+	background-color: #fff;
+	border-top: 1px solid #ececec;
+	width: 100%;
+}
+
+.direct-message.send textarea {
+	width: 82%;
+	color: #002247;
+	height: calc(1.5em + 0.75rem + 2px);
+	padding: 0.375rem 0.75rem;
+	font-weight: 400;
+	line-height: 1.5;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ececec;
+	border-radius: 0.25rem;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	margin: 0 auto;
+	resize: none;
+	max-height: 100px;
+}
+
+@media ( prefers-reduced-motion :reduce) {
+	.direct-message.send button {
+		transition: none;
+	}
+}
+
+@media ( max-width :575px) {
+	.direct-message.send textarea {
+		font-size: 12px;
+		max-height: 60px;
+	}
+	.direct-message.send button {
+		font-size: 12px;
+	}
+}
+
+@media ( min-width :992px) and (max-width:1199px) {
+	.direct-message.send textarea, .direct-message.send button {
+		font-size: 13px;
+	}
+	.direct-message.send textarea {
+		width: 80%;
+		max-height: 88px;
+	}
+}
+
+@media ( min-width :1200px) {
+	.direct-message.send textarea {
+		width: 86%;
+	}
+}
+
+/*--------------------------------------------------------------
+# courcetitle
+--------------------------------------------------------------*/
+.cource-title-list {
+	background-image: url(/image/complete.png);
+	background-repeat: no-repeat;
+	background-position: right top;
+	background-size: 20%;
+}
+
+@media ( max-width :575px) {
+	.cource-title {
+		font-size: 12px;
+		margin-bottom: -10px;
+	}
+	.cource-title-list {
+		background-size: 22%;
+	}
+}
+
+@media ( min-width :992px) and ( max-width :1199px) {
+	.cource-title a {
+		font-size: 14px;
+	}
+	.cource-title-list {
+		background-size: 15%;
+	}
+}
+
+@media ( min-width :1200px) {
+	.cource-title-list {
+		background-size: 10%;
+	}
+}
+
+/*--------------------------------------------------------------
+# courcedetail
+--------------------------------------------------------------*/
+.detail-btn.active {
+	background-color: #002247;
+	color: #EFEDE4;
+}
+
+@media ( max-width :575px) {
+	.heading-icon h4 {
+		font-size: 15px;
+	}
+	.heading-icon h5 {
+		font-size: 15px;
+	}
+	.heading-icon img {
+		width: 20px;
+	}
+}
+
+/*--------------------------------------------------------------
+# index
+--------------------------------------------------------------*/
+.cource.name {
+	font-weight: bold;
+	color: white;
+	background: #CCCCCC;
+	border: solid 3px #CCCCCC;
+	border-radius: 10px;
+	width: 200px;
+	text-align: center;
+}
+
+.index-cource {
+	margin: 2rem auto;
+}
+
+@media ( max-width :575px) {
+	.index h4 {
+		font-size: 13px;
+	}
+	.index-cource {
+		margin: 1rem auto;
+	}
+	.index p {
+		margin-bottom: 0px;
+	}
+}

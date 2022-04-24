@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://wwwthymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="layout/baseLayout :: base-head('メールが届かない場合', ~{::link}, ~{::script})">
+</head>
+<body>
+	<div th:replace="layout/baseLayout :: navbar"></div>
+	<div class="container" style="max-width: 760px;">
+		<div class="heading-icon">
+			<h2 class="mb-3 mt-4">
+				<img class="mb-2 mr-2" th:src="@{image/genjiko_icon/s_10_06.png}" />メールが届かない場合
+			</h2>
+		</div>
+
+		<form class="form-signin" th:action="@{/email_address_check}" th:object="${emailAddressCheckForm}" method="post">
+			<p>ご登録されましたメールアドレスに確認用メールが届かない場合、メールアドレスに間違いがある場合があります。下記フォームより新しいメールアドレスを送信ください。</p>
+			<input type="text" class="form-control mt-3" placeholder="メールアドレス" name="updateMailAddress" autofocus="autofocus" />
+			<p th:errors="*{updateMailAddress}" class="error-message" />
+
+			<!--/* 古いメルアド */-->
+			<input type="hidden" name="mailAddress" th:value="${userMailAddress}" />
+			<input type="submit" class="btn btn-lg btn-info btn-block mt-3 nav3" value="送　信" />
+		</form>
+	</div>
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+</body>
+</html>

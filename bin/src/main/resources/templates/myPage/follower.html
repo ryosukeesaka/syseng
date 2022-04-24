@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head
+	th:replace="layout/baseLayout :: base-head(${user.userDetail.userDisplayName}+'さんのフォロワー', ~{::link}, ~{::script})">
+</head>
+<body>
+	<!--/*  ナビバー引継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: navbar"></div>
+	<!--/* サイドメニュー引継ぎ部分 */-->
+	<div th:replace="layout/myPageLayout :: sidebar"></div>
+	<div class="container">
+		<div class="row">
+			<div class="heading-icon">
+				<h5>
+					<img class="mb-1" th:src="@{/image/genjiko_icon/s_10_01.png}">フォロワー一覧
+				</h5>
+			</div>
+			<div class="mypage follower" id="follower-scroll">
+				<th:block th:each="obj:${followers}">
+					<div class="followerlist-wrap">
+						<a
+							th:href="@{/user/yourpage/other_profile?userId={userId}(userId=${obj.userId})}">
+							<div class="follower-list alert" role="alert">
+								<!--/* divをaタグで囲っているためエラーが出ています */-->
+
+								<div>
+
+									<th:block th:switch="${obj.userDetail.imgPath}">
+										<img th:case="null" th:src="@{/image/noimg.png}"
+											class="profile icon">
+										<img th:case="''" th:src="@{/image/noimg.png}"
+											class="profile icon">
+										<img th:case="*"
+											th:src="@{/image/upload/{imgPath}(imgPath=${obj.userDetail.imgPath})}"
+											class="profile icon">
+									</th:block>
+
+								</div>
+								<div>
+									<div class="follower user">
+										<div>
+											<div>
+												<th:block th:text="'@'+${obj.username}" />
+											</div>
+											<div>
+												<th:block th:switch="${obj.userDetail.userDisplayName}">
+													<th:block th:case="null" th:text="'　'" />
+													<th:block th:case="''" th:text="'　'" />
+													<th:block th:case="*"
+														th:text="${obj.userDetail.userDisplayName}" />
+												</th:block>
+											</div>
+											<div>
+												<th:block th:switch="${obj.userDetail.userShortDescription}">
+													<th:block th:case="null" th:text="'　'" />
+													<th:block th:case="''" th:text="'　'" />
+													<th:block th:case="*"
+														th:text="${obj.userDetail.userShortDescription}" />
+												</th:block>
+											</div>
+										</div>
+										<div class="follow-button">
+											<form th:action="@{/user/mypage/follower}"
+												th:object="${followFollowerForm}" method="post">
+												<button type="submit" name="directMessage"
+													class="btn1 mr-1 mt-1 d-trans">メッセージ</button>
+												<input type="hidden" th:value="${obj.userId}" name="userId">
+												<th:block th:if="${#arrays.contains(following,obj)}">
+													<button type="submit" name="unfollow2"
+														class="btn4 mr-1 mt-1 d-trans">フォローを外す</button>
+												</th:block>
+												<th:block th:unless="${#arrays.contains(following,obj)}">
+													<button type="submit" name="follow"
+														class="btn1 mr-1 mt-1 d-trans">フォローする</button>
+												</th:block>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</div>
+				</th:block>
+				<div class="follower-pagenation">
+					<a th:unless="${last}"
+						th:href="@{/user/mypage/follower?page={page}(page = ${next})}">次へ</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--/* サイドメニュークローズ引継ぎ部分 */-->
+	<div th:replace="layout/myPageLayout :: sidebar-close"></div>
+	<!--/* footer引継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: footer"></div>
+	<!--/* js引継ぎ部分 */-->
+	<div th:replace="layout/baseLayout :: menu-script"></div>
+	<script>
+		var infScroll = new InfiniteScroll('#follower-scroll', { // 記事を挿入していく要素を指定
+			append : '.followerlist-wrap', // 各記事の要素
+			path : '.follower-pagenation a', // 次のページへのリンク要素を指定
+			hideNav : '.follower-pagenation', // 指定要素を非表示にする（ここは無くてもOK）
+			button : '.view-more', // 記事を読み込むトリガーとなる要素を指定
+			scrollThreshold : 80, // スクロールで読み込む：falseで機能停止（デフォルトはtrue）
+			history : 'false', // falseで履歴に残さない
+			bufferPx : 30 // 次コンテンツロードタイミング指定
+		});
+	</script>
+</body>
+
+</html>
